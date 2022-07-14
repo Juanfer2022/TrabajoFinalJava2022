@@ -10,6 +10,9 @@ public class ArticleDTO {
     private String title;
     private String description;
     private String url;
-    private LocalDate publishedAt= LocalDate.now();
+    private LocalDate publishedAt = LocalDate.now();
     private String content;
+    private Author author;
+    private Source source;
+
 }

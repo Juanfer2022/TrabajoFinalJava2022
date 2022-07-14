@@ -2,11 +2,10 @@ package com.informatorio.trabaoFinal.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,4 +19,12 @@ public class Article {
     private String url;
     private LocalDate publishedAt;
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name="author_id", nullable = false)
+    private Author author;
+
+    @ManyToOne
+    @JoinColumn(name= "source_id", nullable = false)
+    private Source source;
 }
