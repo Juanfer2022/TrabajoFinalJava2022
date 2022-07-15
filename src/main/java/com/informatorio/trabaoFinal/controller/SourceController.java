@@ -5,10 +5,7 @@ import com.informatorio.trabaoFinal.service.ISourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sources")
@@ -22,7 +19,12 @@ public class SourceController {
 
         iSourceService.createSource(sourceDTO);
         return ResponseEntity.status(HttpStatus.OK).body("SOURCE creado");
+    }
 
+    @DeleteMapping("/{id}")
 
+    public ResponseEntity<?> deleteSource(@PathVariable Long id){
+        iSourceService.deleteSource(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Source removido");
     }
 }
