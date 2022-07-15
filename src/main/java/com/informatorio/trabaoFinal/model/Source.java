@@ -1,11 +1,9 @@
 package com.informatorio.trabaoFinal.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
 @Data
@@ -16,6 +14,8 @@ public class Source {
     private Long id;
     private String name;
     private String code;
+    @Column(columnDefinition = "TEXT")
+    @Type(type = "org.hibernate.type.TextType")
     private String content;
     private LocalDate createAt;
 
