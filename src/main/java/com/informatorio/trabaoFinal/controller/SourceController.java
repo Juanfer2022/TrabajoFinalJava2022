@@ -1,5 +1,6 @@
 package com.informatorio.trabaoFinal.controller;
 
+import com.informatorio.trabaoFinal.model.Source;
 import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.service.ISourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,14 @@ public class SourceController {
 
     @DeleteMapping("/{id}")
 
-    public ResponseEntity<?> deleteSource(@PathVariable Long id){
+    public ResponseEntity<?> deleteSource(@PathVariable Long id) {
         iSourceService.deleteSource(id);
         return ResponseEntity.status(HttpStatus.OK).body("Source removido");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Source> modifyProduct(@PathVariable Long id, @RequestBody SourceDTO newSource) {
+        Source source = iSourceService.updateSource(id, newSource);
+        return new ResponseEntity<>(source, HttpStatus.OK);
     }
 }
