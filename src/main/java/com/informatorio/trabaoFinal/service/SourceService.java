@@ -6,11 +6,12 @@ import com.informatorio.trabaoFinal.model.Source;
 import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SourceService implements ISourceService {
@@ -47,9 +48,46 @@ public class SourceService implements ISourceService {
             return iSourceRepository.save(source2);
         }
     }
+        public SourceDTO mostrarSource(Long id){
+
+            SourceDTO sourceDTO=null;
+            Optional<Source> source=iSourceRepository.findById(id);
+            if(source.isEmpty()){
+
+                throw new Exceptions("Source no encontrada. id inexistente", HttpStatus.NOT_FOUND);
+            }
+            sourceDTO = mapper.convertValue(source, SourceDTO.class);
+            return sourceDTO;
+    }
+
+    public Collection<SourceDTO> getAllSource(){
+        List<Source> sourceList= iSourceRepository.findAll();
+        Set<SourceDTO> sourceDTOSet = new HashSet<>();
+        for (Source source: sourceList){
+            sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
+        }
+        return sourceDTOSet;
+    }
+
+
+    public Page<Source> getAllSource(Pageable pageable) {
+        return iSourceRepository.findAll(pageable);
+    }
 }
 
-    /*public Product modifyProduct(long id, Product newProduct) {
+    /*public Collection<StudentDTO> getAll(){
+        List<Student> students = studentRepository.findAll();
+        Set<StudentDTO> studentsDTO = new HashSet<>();
+        for (Student student: students){
+            studentsDTO.add(mapper.convertValue(student, StudentDTO.class));
+        }
+        return studentsDTO;
+    }
+
+
+
+
+    public Product modifyProduct(long id, Product newProduct) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
         newProduct.setId(product.getId());
