@@ -10,6 +10,6 @@ public class AuthorDTO {
     private Long id;
     private String firstname;
     private String lastname;
-    private String fullname = firstname + lastname;
+    private String fullname;
     private LocalDate createdAT = LocalDate.now();
 }
