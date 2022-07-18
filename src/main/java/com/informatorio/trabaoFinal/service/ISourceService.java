@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface ISourceService {
     public void createSource(SourceDTO sourceDTO);
@@ -15,4 +16,5 @@ public interface ISourceService {
     public Collection<SourceDTO> getAllSource();
     public Page<Source> getAllSource(Pageable pageable);
 
+    public Set<SourceDTO> getSourceWithNameLike(String name);
 }

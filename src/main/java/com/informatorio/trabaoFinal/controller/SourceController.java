@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/sources")
@@ -56,5 +57,12 @@ public class SourceController {
         Pageable pageable = PageRequest.of(page, 5);
         return iSourceService.getAllSource(pageable);
     }
+
+    @GetMapping("/listname")
+    public Set<SourceDTO> listname(@RequestParam String name){
+        return iSourceService.getSourceWithNameLike(name);
+
+    }
+
 
 }

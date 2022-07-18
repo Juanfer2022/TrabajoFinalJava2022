@@ -73,9 +73,28 @@ public class SourceService implements ISourceService {
     public Page<Source> getAllSource(Pageable pageable) {
         return iSourceRepository.findAll(pageable);
     }
+
+    public Set<SourceDTO> getSourceWithNameLike(String name){
+        Set<Source> sources = iSourceRepository.getSourceByNameLike(name);
+        Set<SourceDTO> sourceDTOSet = new HashSet<>();
+        for (Source source: sources){
+            sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
+        }
+        return sourceDTOSet;
+    }
+
 }
 
-    /*public Collection<StudentDTO> getAll(){
+    /* public Set<StudentDTO> getStudentWithLastNameLike(String lastname){
+        Set<Student> students = studentRepository.getStudentByLastNameLike(lastname);
+        Set<StudentDTO> studentsDTO = new HashSet<>();
+        for (Student student: students){
+            studentsDTO.add(mapper.convertValue(student, StudentDTO.class));
+        }
+        return studentsDTO;
+    }
+
+    public Collection<StudentDTO> getAll(){
         List<Student> students = studentRepository.findAll();
         Set<StudentDTO> studentsDTO = new HashSet<>();
         for (Student student: students){
