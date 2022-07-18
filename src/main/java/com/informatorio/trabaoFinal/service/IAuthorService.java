@@ -5,4 +5,5 @@ import com.informatorio.trabaoFinal.model.AuthorDTO;
 public interface IAuthorService {
 
     public void createAuthor(AuthorDTO authorDTO);
+    public AuthorDTO mostrarUnActor(Long id);
 }
