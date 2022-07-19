@@ -6,4 +6,5 @@ public interface IAuthorService {
 
     public void createAuthor(AuthorDTO authorDTO);
     public AuthorDTO mostrarUnActor(Long id);
+    public void deleteAuthor(Long id);
 }

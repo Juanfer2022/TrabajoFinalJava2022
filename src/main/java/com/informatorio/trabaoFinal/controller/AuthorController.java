@@ -1,7 +1,6 @@
 package com.informatorio.trabaoFinal.controller;
 
 import com.informatorio.trabaoFinal.model.AuthorDTO;
-import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.service.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,4 +26,10 @@ public class AuthorController {
 
         return iAuthorService.mostrarUnActor(id);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
+        iAuthorService.deleteAuthor(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Author removido");
+
 }
+    }

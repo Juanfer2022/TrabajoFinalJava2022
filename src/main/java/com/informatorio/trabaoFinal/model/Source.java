@@ -16,9 +16,6 @@ public class Source {
     private Long id;
     private String name;
     private String code;
-    @Column(columnDefinition = "TEXT")
-    @Type(type = "org.hibernate.type.TextType")
-    private String content;
     private LocalDate createAt;
 
 

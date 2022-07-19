@@ -42,4 +42,12 @@ public class AuthorService implements IAuthorService{
         authorDTO = mapper.convertValue(author, AuthorDTO.class);
         return authorDTO;
     }
+
+    public void deleteAuthor(Long id) {
+        Optional<Author> author = iAuthorRepository.findById(id);
+        if (author.isEmpty()) {
+            throw new Exceptions("Author no encontrado.El proceso de ELIMINACIO ha sido cancelado", HttpStatus.NOT_FOUND);
+        }
+        iAuthorRepository.deleteById(id);
+    }
 }

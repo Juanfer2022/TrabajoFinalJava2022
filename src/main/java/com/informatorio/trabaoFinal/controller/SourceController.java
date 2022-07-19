@@ -29,7 +29,6 @@ public class SourceController {
     }
 
     @DeleteMapping("/{id}")
-
     public ResponseEntity<?> deleteSource(@PathVariable Long id) {
         iSourceService.deleteSource(id);
         return ResponseEntity.status(HttpStatus.OK).body("Source removido");
