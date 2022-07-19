@@ -21,6 +21,7 @@ public class SourceController {
     @Autowired
     ISourceService iSourceService;
 
+   //Crear source
     @PostMapping
     public ResponseEntity<?> createSource(@RequestBody SourceDTO sourceDTO) {
 
@@ -28,28 +29,33 @@ public class SourceController {
         return ResponseEntity.status(HttpStatus.OK).body("SOURCE creado");
     }
 
+    //Borrar un source
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSource(@PathVariable Long id) {
         iSourceService.deleteSource(id);
         return ResponseEntity.status(HttpStatus.OK).body("Source removido");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Source> modifyProduct(@PathVariable Long id,  @RequestBody SourceDTO newSource) {
-        Source source = iSourceService.updateSource(id, newSource);
+    //Modificar un source
+    @PutMapping()
+    public ResponseEntity<Source> modifySource(@RequestBody SourceDTO newSource) {
+        Source source = iSourceService.updateSource(newSource);
         return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
+    //Mostrar un source
     @GetMapping("/{id}")
     public SourceDTO getSource(@PathVariable Long id){
         return iSourceService.mostrarSource(id);
     }
 
+    //Mostrar todos sources
     @GetMapping("/allsources")
     public Collection<SourceDTO> allsources(){
         return iSourceService.getAllSource();
     }
 
+    //Mostrar souces con paginacion
     @GetMapping("/allsources/page/{page}")
     public Page<Source> allsources(@PathVariable Integer page)
     {
@@ -57,6 +63,7 @@ public class SourceController {
         return iSourceService.getAllSource(pageable);
     }
 
+    //Buscar por una palabra
     @GetMapping("/listname")
     public Set<SourceDTO> listname(@RequestParam String name){
         return iSourceService.getSourceWithNameLike(name);

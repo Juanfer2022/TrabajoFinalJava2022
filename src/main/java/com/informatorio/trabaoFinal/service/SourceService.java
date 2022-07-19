@@ -28,7 +28,7 @@ public class SourceService implements ISourceService {
         Source source = mapper.convertValue(sourceDTO, Source.class);
         iSourceRepository.save(source);
     }
-
+    //Borrar Source
     public void deleteSource(Long id) {
         Optional<Source> source = iSourceRepository.findById(id);
         if (source.isEmpty()) {
@@ -36,19 +36,18 @@ public class SourceService implements ISourceService {
         }
         iSourceRepository.deleteById(id);
     }
-
-    public Source updateSource(Long id, SourceDTO sourceDTO) {
-        {
-            Optional<Source> source1 = iSourceRepository.findById(id);
-            if (source1.isEmpty()) {
-                throw new Exceptions("Source no encontrada. La Actualiacion falló", HttpStatus.NOT_FOUND);
-            }
-            sourceDTO.setId(sourceDTO.getId());
+    //Modificar Source
+    public Source updateSource(SourceDTO sourceDTO) {
+        //    Optional<Source> source1 = iSourceRepository.findById(id);
+            //if (source1.isEmpty()) {
+          //      throw new Exceptions("Source no encontrada. La Actualiacion falló", HttpStatus.NOT_FOUND);
+          //  }
+          //  sourceDTO.setId(sourceDTO.getId());
             Source source2 = mapper.convertValue(sourceDTO, Source.class);
 
             return iSourceRepository.save(source2);
         }
-    }
+
         public SourceDTO mostrarSource(Long id){
 
             SourceDTO sourceDTO=null;
@@ -60,7 +59,7 @@ public class SourceService implements ISourceService {
             sourceDTO = mapper.convertValue(source, SourceDTO.class);
             return sourceDTO;
     }
-
+    //Mostrar todoss
     public Collection<SourceDTO> getAllSource(){
         List<Source> sourceList= iSourceRepository.findAll();
         Set<SourceDTO> sourceDTOSet = new HashSet<>();
@@ -70,11 +69,11 @@ public class SourceService implements ISourceService {
         return sourceDTOSet;
     }
 
-
+   //Mostrar todoss con paginacion
     public Page<Source> getAllSource(Pageable pageable) {
         return iSourceRepository.findAll(pageable);
     }
-
+    //Buscar por una palabra dada
     public Set<SourceDTO> getSourceWithNameLike(String name){
         Set<Source> sources = iSourceRepository.getSourceByNameLike(name);
         Set<SourceDTO> sourceDTOSet = new HashSet<>();
@@ -86,36 +85,4 @@ public class SourceService implements ISourceService {
 
 }
 
-    /* public Set<StudentDTO> getStudentWithLastNameLike(String lastname){
-        Set<Student> students = studentRepository.getStudentByLastNameLike(lastname);
-        Set<StudentDTO> studentsDTO = new HashSet<>();
-        for (Student student: students){
-            studentsDTO.add(mapper.convertValue(student, StudentDTO.class));
-        }
-        return studentsDTO;
-    }
 
-    public Collection<StudentDTO> getAll(){
-        List<Student> students = studentRepository.findAll();
-        Set<StudentDTO> studentsDTO = new HashSet<>();
-        for (Student student: students){
-            studentsDTO.add(mapper.convertValue(student, StudentDTO.class));
-        }
-        return studentsDTO;
-    }
-
-
-
-
-    public Product modifyProduct(long id, Product newProduct) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
-        newProduct.setId(product.getId());
-        return productRepository.save(newProduct);
-    }
-
-    public void updateSource(SourceDTO sourceDTO){
-        Source source1 = mapper.convertValue(sourceDTO, Source.class);
-        iSourceRepository.save(source1);
-
-}*/

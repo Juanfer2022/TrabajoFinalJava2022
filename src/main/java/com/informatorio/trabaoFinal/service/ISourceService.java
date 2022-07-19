@@ -11,7 +11,7 @@ import java.util.Set;
 public interface ISourceService {
     public void createSource(SourceDTO sourceDTO);
     public void deleteSource(Long id);
-    public Source updateSource(Long id, SourceDTO sourceDTO);
+    public Source updateSource(SourceDTO sourceDTO);
     public SourceDTO mostrarSource(Long id);
     public Collection<SourceDTO> getAllSource();
     public Page<Source> getAllSource(Pageable pageable);
