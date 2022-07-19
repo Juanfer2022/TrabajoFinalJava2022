@@ -4,12 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
+import com.informatorio.trabaoFinal.model.Source;
+import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuthorService implements IAuthorService {
@@ -61,4 +65,28 @@ public class AuthorService implements IAuthorService {
 
             return iAuthorRepository.save(author1);
         }
+
+        //Obtener todos los author
+        public Collection<AuthorDTO> getAllAuthor(){
+            List<Author> authors= iAuthorRepository.findAll();
+            Set<AuthorDTO> authorDTOS = new HashSet<>();
+            for (Author author: authors){
+                authorDTOS.add(mapper.convertValue(author, AuthorDTO.class));
+            }
+            return authorDTOS;
+        }
+    //Mostrar todos los author con paginacion
+    public Page<Author> getAllAuthor(Pageable pageable) {
+        return iAuthorRepository.findAll(pageable);
+    }
+
+    //Buscar por un string en fullname
+    public Set<AuthorDTO> getAuthorWithFullNameLike(String fullname){
+        Set<Author> authors = iAuthorRepository.getAuthorByFullNameLike(fullname);
+        Set<AuthorDTO> authorDTOS = new HashSet<>();
+        for (Author author: authors){
+            authorDTOS.add(mapper.convertValue(author, AuthorDTO.class));
+        }
+        return authorDTOS;
+    }
     }

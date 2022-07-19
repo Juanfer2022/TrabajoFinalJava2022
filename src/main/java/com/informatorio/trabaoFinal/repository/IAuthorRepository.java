@@ -12,5 +12,7 @@ import java.util.Set;
 @Repository
 public interface IAuthorRepository extends JpaRepository<Author, Long> {
 
-
+    //Buscar por un string en fullname
+    @Query("from Author a where a.fullname like %:fullname%")
+    Set<Author> getAuthorByFullNameLike(@Param("fullname")String fullname);
 }
