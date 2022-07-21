@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @RestController
@@ -69,6 +71,11 @@ public class AuthorController {
     @GetMapping("/fullname")
     public Set<AuthorDTO> getAuthorByFullName(@RequestParam String fullname){
         return iAuthorService.getAuthorWithFullNameLike(fullname);
+
+    }
+    @GetMapping("/created")
+    public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam String fecha){
+        return iAuthorService.getAuthorWithCreatedAT(fecha);
 
     }
 

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -83,6 +84,15 @@ public class AuthorService implements IAuthorService {
     //Buscar por un string en fullname
     public Set<AuthorDTO> getAuthorWithFullNameLike(String fullname){
         Set<Author> authors = iAuthorRepository.getAuthorByFullNameLike(fullname);
+        Set<AuthorDTO> authorDTOS = new HashSet<>();
+        for (Author author: authors){
+            authorDTOS.add(mapper.convertValue(author, AuthorDTO.class));
+        }
+        return authorDTOS;
+    }
+
+    public Set<AuthorDTO> getAuthorWithCreatedAT(String fecha){
+        Set<Author> authors = iAuthorRepository.getAuthorByCreatedAt(fecha);
         Set<AuthorDTO> authorDTOS = new HashSet<>();
         for (Author author: authors){
             authorDTOS.add(mapper.convertValue(author, AuthorDTO.class));

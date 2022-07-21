@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @Data
 public class Author {
@@ -17,5 +19,5 @@ public class Author {
     private String firstname;
     private String lastname;
     private String fullname;
-    private LocalDate createdAT;
+    private String createdAT;
 }

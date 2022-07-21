@@ -1,6 +1,7 @@
 package com.informatorio.trabaoFinal.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,6 +19,9 @@ public class Article {
     private String description;
     private String url;
     private LocalDate publishedAt;
+    private boolean published;
+    @Column(columnDefinition = "LONGBLOB")
+    @Type(type = "org.hibernate.type.TextType")
     private String content;
 
     @ManyToOne
