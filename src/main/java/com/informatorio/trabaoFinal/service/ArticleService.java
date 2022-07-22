@@ -60,4 +60,18 @@ public class ArticleService implements IArticleService{
         }
         return articleDTOS;
     }
+
+    public Set<ArticleDTO> getArticleWithTitleLike(String title) {
+
+        if (title.length() > 2) {
+            Set<Article> articles = iArticleRepository.getArticleByTitleLike(title);
+            Set<ArticleDTO> articleDTOS = new HashSet<>();
+            for (Article article : articles) {
+                articleDTOS.add(mapper.convertValue(article, ArticleDTO.class));
+            }
+            return articleDTOS;
+        } else {
+            throw new Exceptions("La busqueda debe tener al menos 3 caracteres", HttpStatus.NOT_FOUND);
+        }
+    }
 }

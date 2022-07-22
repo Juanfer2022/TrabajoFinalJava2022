@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@Table( indexes = {@Index(name="code", columnList = "code", unique = true)})
 public class Source {
 
     @Id

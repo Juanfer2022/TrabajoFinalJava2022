@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/articles")
@@ -44,6 +45,12 @@ public class ArticleController {
     @GetMapping("/allarticles")
     public Collection<ArticleDTO> allarticle(){
         return iArticleService.getAllArticle();
+    }
+
+    @GetMapping("/todoslike")
+    public Set<ArticleDTO> getArticleByLike(@RequestParam String  title){
+        return iArticleService.getArticleWithTitleLike(title);
+
     }
 
 }

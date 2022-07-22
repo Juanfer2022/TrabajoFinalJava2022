@@ -74,7 +74,7 @@ public class AuthorController {
 
     }
     @GetMapping("/created")
-    public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam String fecha){
+    public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam String  fecha){
         return iAuthorService.getAuthorWithCreatedAT(fecha);
 
     }
