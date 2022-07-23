@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
-import com.informatorio.trabaoFinal.model.Source;
-import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -29,7 +26,8 @@ public class AuthorService implements IAuthorService {
     public void createAuthor(AuthorDTO authorDTO) {
 
         Author author = mapper.convertValue(authorDTO, Author.class);
-
+        author.setFullname(author.getFirstname()+ "  "+author
+                .getLastname());
         iAuthorRepository.save(author);
     }
 

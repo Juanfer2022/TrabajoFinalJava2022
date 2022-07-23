@@ -56,10 +56,10 @@ public class SourceController {
     }
 
     //Mostrar souces con paginacion
-    @GetMapping("/allsources/page/{page}")
-    public Page<Source> allsources(@PathVariable Integer page)
+    @GetMapping("/allsources/page")
+    public Page<Source> allsources(@RequestParam Integer page, @RequestParam Integer tam)
     {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, tam);
         return iSourceService.getAllSource(pageable);
     }
 

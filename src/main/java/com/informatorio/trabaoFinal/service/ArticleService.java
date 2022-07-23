@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
-import com.informatorio.trabaoFinal.model.Author;
-import com.informatorio.trabaoFinal.model.AuthorDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -27,6 +26,8 @@ public class ArticleService implements IArticleService{
     public void createArticle(ArticleDTO articleDTO) {
 
         Article article = mapper.convertValue(articleDTO, Article.class);
+        article.setPublishedAt(LocalDate.now());
+        article.setPublished(false);
         iArticleRepository.save(article);
     }
     //Poner article como publicado
@@ -63,7 +64,7 @@ public class ArticleService implements IArticleService{
 
     public Set<ArticleDTO> getArticleWithTitleLike(String title) {
 
-        if (title.length() > 2) {
+        if ((title.length() > 2) || (title=="")) {
             Set<Article> articles = iArticleRepository.getArticleByTitleLike(title);
             Set<ArticleDTO> articleDTOS = new HashSet<>();
             for (Article article : articles) {
@@ -71,7 +72,7 @@ public class ArticleService implements IArticleService{
             }
             return articleDTOS;
         } else {
-            throw new Exceptions("La busqueda debe tener al menos 3 caracteres", HttpStatus.NOT_FOUND);
+            throw new Exceptions("La busqueda debe tener al menos 3 caracteres ", HttpStatus.NOT_FOUND);
         }
     }
 }
