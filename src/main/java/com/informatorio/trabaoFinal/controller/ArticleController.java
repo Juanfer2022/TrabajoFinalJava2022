@@ -2,9 +2,13 @@ package com.informatorio.trabaoFinal.controller;
 
 import com.informatorio.trabaoFinal.model.ArticleDTO;
 
+import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
 import com.informatorio.trabaoFinal.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +55,12 @@ public class ArticleController {
     public Set<ArticleDTO> getArticleByLike(@RequestParam String  title){
         return iArticleService.getArticleWithTitleLike(title);
 
+    }
+    @GetMapping("/allarticles/page/{page}")
+    public Page<ArticleDTO> allArticlesPage(@PathVariable Integer page)
+    {
+        Pageable pageable = PageRequest.of(page, 5);
+        return iArticleService.getAllArticlePage(pageable);
     }
 
 }

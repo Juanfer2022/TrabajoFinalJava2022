@@ -4,10 +4,7 @@ import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 
 public interface IAuthorService {

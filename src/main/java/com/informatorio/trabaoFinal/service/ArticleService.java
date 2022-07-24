@@ -6,11 +6,15 @@ import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService implements IArticleService{
@@ -61,7 +65,7 @@ public class ArticleService implements IArticleService{
         }
         return articleDTOS;
     }
-
+       // Buscar article por una cadena de tres o mas caracteres
     public Set<ArticleDTO> getArticleWithTitleLike(String title) {
 
         if ((title.length() > 2) || (title=="")) {
@@ -75,4 +79,21 @@ public class ArticleService implements IArticleService{
             throw new Exceptions("La busqueda debe tener al menos 3 caracteres ", HttpStatus.NOT_FOUND);
         }
     }
+
+    //Mostrar articles con paginacion
+    public Page<ArticleDTO> getAllArticlePage(Pageable pageable) {
+
+        Page <Article> page = iArticleRepository.findAll(pageable);
+        int totalElements = (int) page.getTotalElements();
+
+        return new PageImpl<ArticleDTO>(page.getContent().stream().map(article -> new ArticleDTO(
+                article.getId(),
+                article.getTitle(),
+                article.getDescription(),
+                article.getUrl(),
+                article.getContent(),
+                article.getAuthor(),
+                article.getSource())).collect(Collectors.toList()), pageable, totalElements);
+
+}
 }
