@@ -5,6 +5,7 @@ import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
+import com.informatorio.trabaoFinal.util.mapeo.ArticleaArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,6 +25,9 @@ public class ArticleService implements IArticleService{
 
     @Autowired
     ObjectMapper mapper;
+
+    @Autowired
+    ArticleaArticleDTO articleaArticleDTO;
 
 
     // Crear un Article
@@ -56,44 +60,26 @@ public class ArticleService implements IArticleService{
         iArticleRepository.deleteById(id);
     }
 
-    //Obtener todos los article
-    public Collection<ArticleDTO> getAllArticle(){
-        List<Article> articles= iArticleRepository.findAll();
-        Set<ArticleDTO> articleDTOS = new HashSet<>();
-        for (Article article: articles){
-            articleDTOS.add(mapper.convertValue(article, ArticleDTO.class));
-        }
-        return articleDTOS;
-    }
-       // Buscar article por una cadena de tres o mas caracteres
-    public Set<ArticleDTO> getArticleWithTitleLike(String title) {
+    // buscar article por un string mayor a 2 caracteres,
+    // que haya sido publicado y por los campos title y description
+    public Page<ArticleDTO>  getAllArticleLikePage(Pageable pageable, String title) {
 
-        if ((title.length() > 2) || (title=="")) {
-            Set<Article> articles = iArticleRepository.getArticleByTitleLike(title);
-            Set<ArticleDTO> articleDTOS = new HashSet<>();
-            for (Article article : articles) {
-                articleDTOS.add(mapper.convertValue(article, ArticleDTO.class));
-            }
-            return articleDTOS;
-        } else {
+            Page<Article> page = iArticleRepository.getArticleByTitleLikePage(pageable, title);
+            int totalCont = (int) page.getTotalElements();
+            List<ArticleDTO> articleDTOList = Collections.emptyList();
+
+        if ((title.length() < 3) || (title == "" )){
             throw new Exceptions("La busqueda debe tener al menos 3 caracteres ", HttpStatus.NOT_FOUND);
         }
+           else if(totalCont == 0) {
+            throw new Exceptions("No hay registros que coincidan con la busqueda lanzada ", HttpStatus.NOT_FOUND);
+        }else {
+                List<ArticleDTO> articleDTOS =  page.getContent().stream().map(article -> mapper
+                        .convertValue(article, ArticleDTO.class)).collect(Collectors.toList());
+                articleDTOList = articleDTOS;
+
+            return new PageImpl<>(articleDTOList);
+            }
     }
 
-    //Mostrar articles con paginacion
-    public Page<ArticleDTO> getAllArticlePage(Pageable pageable) {
-
-        Page <Article> page = iArticleRepository.findAll(pageable);
-        int totalElements = (int) page.getTotalElements();
-
-        return new PageImpl<ArticleDTO>(page.getContent().stream().map(article -> new ArticleDTO(
-                article.getId(),
-                article.getTitle(),
-                article.getDescription(),
-                article.getUrl(),
-                article.getContent(),
-                article.getAuthor(),
-                article.getSource())).collect(Collectors.toList()), pageable, totalElements);
-
-}
 }

@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+
 import java.util.Set;
 
 @RestController
@@ -73,10 +75,18 @@ public class AuthorController {
         return iAuthorService.getAuthorWithFullNameLike(fullname);
 
     }
+    //Buscar authors creados despues de una fecha dada
     @GetMapping("/created")
-    public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam String  fecha){
+    public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fecha){
         return iAuthorService.getAuthorWithCreatedAT(fecha);
 
     }
+    //Buscar authors creados despues de una fecha dada paginado
+    @GetMapping("/created/page/{pages}")
+    public Page<AuthorDTO> getAuthorByCreatedATPage(@PathVariable Integer pages, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fecha){
 
+        Pageable pageable = PageRequest.of(pages, 5);
+        return iAuthorService.getAllAuthorLikePage(pageable, fecha);
+
+    }
 }

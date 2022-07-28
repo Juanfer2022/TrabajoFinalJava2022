@@ -1,13 +1,15 @@
 package com.informatorio.trabaoFinal.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Entity
 @Data
@@ -19,5 +21,6 @@ public class Author {
     private String firstname;
     private String lastname;
     private String fullname;
-    private String createdAT;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate createdAT;
 }

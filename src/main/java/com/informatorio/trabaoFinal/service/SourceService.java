@@ -5,14 +5,16 @@ import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Source;
 import com.informatorio.trabaoFinal.model.SourceDTO;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
+import com.informatorio.trabaoFinal.util.CodigoSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 public class SourceService implements ISourceService {
@@ -23,13 +25,24 @@ public class SourceService implements ISourceService {
     @Autowired
     ObjectMapper mapper;
 
+    @Autowired
+    CodigoSource codigoSource;
+
     // Crear un source
     public void createSource(SourceDTO sourceDTO) {
 
+        String code = sourceDTO.getName();
+        //codigoSource(code);
+
         Source source = mapper.convertValue(sourceDTO, Source.class);
         source.setCreateAt(LocalDate.now());
+        source.setCode(codigoSource.crearcodigo(code));
         iSourceRepository.save(source);
     }
+
+    private void codigoSource(String code) {
+    }
+
     //Borrar Source
     public void deleteSource(Long id) {
         Optional<Source> source = iSourceRepository.findById(id);
@@ -64,16 +77,19 @@ public class SourceService implements ISourceService {
     //Mostrar todoss
     public Collection<SourceDTO> getAllSource(){
         List<Source> sourceList= iSourceRepository.findAll();
-        Set<SourceDTO> sourceDTOSet = new HashSet<>();
-        for (Source source: sourceList){
-            sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
-        }
-        return sourceDTOSet;
+       List<SourceDTO> sourceDTOS= sourceList.stream()
+               .map(source -> mapper.convertValue(source, SourceDTO.class))
+               .collect(Collectors.toList());
+        // Set<SourceDTO> sourceDTOSet = new HashSet<>();
+        //for (Source source: sourceList){
+         //   sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
+        //}
+        return sourceDTOS;//sourceDTOSet;
     }
 
    //Mostrar todoss con paginacion
     public Page<Source> getAllSource(Pageable pageable) {
-        
+
         return iSourceRepository.findAll(pageable);
     }
 
@@ -86,6 +102,7 @@ public class SourceService implements ISourceService {
         }
         return sourceDTOSet;
     }
+
 
 }
 

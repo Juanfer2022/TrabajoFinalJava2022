@@ -1,9 +1,12 @@
 package com.informatorio.trabaoFinal.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
 
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
+import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import com.informatorio.trabaoFinal.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -21,11 +26,17 @@ import java.util.Set;
 public class ArticleController {
 
     @Autowired
+    ObjectMapper mapper;
+
+    @Autowired
+    IArticleRepository iArticleRepository;
+
+    @Autowired
     IArticleService iArticleService;
 
     //Crear author
     @PostMapping
-    public ResponseEntity<?> createAuthor(@RequestBody ArticleDTO articleDTO) {
+    public ResponseEntity<?> createArticle(@RequestBody ArticleDTO articleDTO) {
 
         iArticleService.createArticle(articleDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Article creado");
@@ -46,21 +57,31 @@ public class ArticleController {
 
     }
 
-    @GetMapping("/allarticles")
-    public Collection<ArticleDTO> allarticle(){
-        return iArticleService.getAllArticle();
-    }
 
-    @GetMapping("/todoslike")
-    public Set<ArticleDTO> getArticleByLike(@RequestParam String  title){
-        return iArticleService.getArticleWithTitleLike(title);
 
-    }
-    @GetMapping("/allarticles/page/{page}")
-    public Page<ArticleDTO> allArticlesPage(@PathVariable Integer page)
+    @GetMapping("/allarticles/pages")
+    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages, @RequestParam String title)
     {
-        Pageable pageable = PageRequest.of(page, 5);
-        return iArticleService.getAllArticlePage(pageable);
+        Pageable pageable = PageRequest.of(pages, 3);
+        return iArticleService.getAllArticleLikePage(pageable, title);
+    }
+    @GetMapping("/allarticles")
+    public ResponseEntity<?> allArticlesPagess(@RequestParam Integer pages, @RequestParam String title)
+    {
+        Pageable pageable = PageRequest.of(pages, 3);
+        Page<Article> pageResult= iArticleRepository.getArticleByTitleLikePage(pageable, title);
+
+        Map<String, Object> pageableDTO = new HashMap<>();
+        pageableDTO.put("content", pageResult.getContent().stream().map(article ->mapper
+                .convertValue(article, ArticleDTO.class) ).toList());
+        pageableDTO.put("page",pageResult.getNumber());
+        pageableDTO.put("size", pageResult.getSize());
+        pageableDTO.put("totalElements",pageResult.getTotalElements());
+        pageableDTO.put("totalPage",pageResult.getTotalPages());
+
+
+
+        return new ResponseEntity<>(pageableDTO, HttpStatus.OK);
     }
 
 }
