@@ -53,11 +53,12 @@ public class SourceService implements ISourceService {
     }
     //Modificar Source
     public Source updateSource(SourceDTO sourceDTO) {
-        //    Optional<Source> source1 = iSourceRepository.findById(id);
-            //if (source1.isEmpty()) {
-          //      throw new Exceptions("Source no encontrada. La Actualiacion falló", HttpStatus.NOT_FOUND);
-          //  }
-          //  sourceDTO.setId(sourceDTO.getId());
+            Optional<Source> source1 = iSourceRepository.findById(sourceDTO.getId());
+          if (source1.isEmpty()) {
+                throw new Exceptions("El Source que quiere" +
+                        " actualizar no existe. La Actualiacion se canceló", HttpStatus.NOT_FOUND);
+            }
+            //sourceDTO.setId(sourceDTO.getId());
             Source source2 = mapper.convertValue(sourceDTO, Source.class);
 
             return iSourceRepository.save(source2);

@@ -3,7 +3,6 @@ package com.informatorio.trabaoFinal.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
-
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
@@ -16,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/articles")
@@ -48,40 +44,35 @@ public class ArticleController {
         iArticleService.updateFinished(id);
         return ResponseEntity.status(HttpStatus.OK).body("El Article ha sido marcado como Publicado");
     }
+    //Traer article por id
+    @GetMapping("traer/{id}")
+    public ArticleDTO getArticle(@PathVariable Long id){
 
+        return iArticleService.bringArticleById(id);
+    }
+
+    //Modificar article
+    @PutMapping("/modifica")
+    public ResponseEntity<Article> modifyArticle(@RequestBody ArticleDTO newArticle) {
+        Article article = iArticleService.updateArticle(newArticle);
+
+        return new ResponseEntity<>(article, HttpStatus.OK);
+
+    }
     //Borrar article
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArticle(@PathVariable Long id) {
         iArticleService.deleteArticle(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Article removido");
 
+        return ResponseEntity.status(HttpStatus.OK).body("Article removido");
     }
 
-
-
     @GetMapping("/allarticles/pages")
-    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages, @RequestParam String title)
+    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages,String title)
     {
         Pageable pageable = PageRequest.of(pages, 3);
         return iArticleService.getAllArticleLikePage(pageable, title);
     }
-    @GetMapping("/allarticles")
-    public ResponseEntity<?> allArticlesPagess(@RequestParam Integer pages, @RequestParam String title)
-    {
-        Pageable pageable = PageRequest.of(pages, 3);
-        Page<Article> pageResult= iArticleRepository.getArticleByTitleLikePage(pageable, title);
 
-        Map<String, Object> pageableDTO = new HashMap<>();
-        pageableDTO.put("content", pageResult.getContent().stream().map(article ->mapper
-                .convertValue(article, ArticleDTO.class) ).toList());
-        pageableDTO.put("page",pageResult.getNumber());
-        pageableDTO.put("size", pageResult.getSize());
-        pageableDTO.put("totalElements",pageResult.getTotalElements());
-        pageableDTO.put("totalPage",pageResult.getTotalPages());
-
-
-
-        return new ResponseEntity<>(pageableDTO, HttpStatus.OK);
-    }
 
 }

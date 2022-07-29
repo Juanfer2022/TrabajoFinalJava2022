@@ -2,10 +2,7 @@ package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
-import com.informatorio.trabaoFinal.model.Article;
-import com.informatorio.trabaoFinal.model.ArticleDTO;
-import com.informatorio.trabaoFinal.model.Author;
-import com.informatorio.trabaoFinal.model.AuthorDTO;
+import com.informatorio.trabaoFinal.model.*;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,12 +59,11 @@ public class AuthorService implements IAuthorService {
 
     //Modificar un Author
     public Author updateAuthor(AuthorDTO authorDTO) {
-        //{
-        //Optional<Author> author = iAuthorRepository.findById(authorDTO.getId());
-        //if (author.isEmpty()) {
-        //  throw new Exceptions("Author no encontrado. La Actualiacion falló", HttpStatus.NOT_FOUND);
-        //}
-        //authorDTO.setId(authorDTO.getId());
+        Optional<Author> author = iAuthorRepository.findById(authorDTO.getId());
+        if (author.isEmpty()) {
+            throw new Exceptions("El Author que quiere" +
+                    " actualizar no existe. La Actualiacion se canceló", HttpStatus.NOT_FOUND);
+        }
         Author author1 = mapper.convertValue(authorDTO, Author.class);
 
         return iAuthorRepository.save(author1);

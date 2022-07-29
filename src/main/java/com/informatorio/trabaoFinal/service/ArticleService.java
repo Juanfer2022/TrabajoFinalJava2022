@@ -5,7 +5,6 @@ import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.model.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
-import com.informatorio.trabaoFinal.util.mapeo.ArticleaArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,13 +25,11 @@ public class ArticleService implements IArticleService{
     @Autowired
     ObjectMapper mapper;
 
-    @Autowired
-    ArticleaArticleDTO articleaArticleDTO;
+
 
 
     // Crear un Article
     public void createArticle(ArticleDTO articleDTO) {
-
         Article article = mapper.convertValue(articleDTO, Article.class);
         article.setPublishedAt(LocalDate.now());
         article.setPublished(false);
@@ -51,7 +48,29 @@ public class ArticleService implements IArticleService{
 
     }
 
-    //B0rrar un Article
+        //Trae un article por id
+    public ArticleDTO bringArticleById(Long id) {
+        Optional<Article> article = iArticleRepository.findById(id);
+        if (article.isEmpty()) {
+
+            throw new Exceptions("Article no encontrada. Id inexistente", HttpStatus.NOT_FOUND);
+        }
+        ArticleDTO articleDTO = null;
+        articleDTO = mapper.convertValue(article, ArticleDTO.class);
+        return articleDTO;
+    }
+    //Modificar un Article
+    public Article updateArticle(ArticleDTO articleDTO) {
+        Optional<Article> article = iArticleRepository.findById(articleDTO.getId());
+        if (article.isEmpty()) {
+            throw new Exceptions("El Author que quiere" +
+                    " actualizar no existe. La Actualiacion se canceló", HttpStatus.NOT_FOUND);
+        }
+        Article article1 = mapper.convertValue(articleDTO, Article.class);
+
+        return iArticleRepository.save(article1);
+    }
+    //Borrar un Article
     public void deleteArticle(Long id) {
         Optional<Article> article = iArticleRepository.findById(id);
         if (article.isEmpty()) {

@@ -1,5 +1,6 @@
 package com.informatorio.trabaoFinal.controller;
 
+import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.AuthorDTO;
 import com.informatorio.trabaoFinal.model.Source;
@@ -52,7 +53,9 @@ public class AuthorController {
     @PutMapping()
     public ResponseEntity<Author> modifyAuthor(@RequestBody AuthorDTO newAuthor) {
         Author author= iAuthorService.updateAuthor(newAuthor);
-        return new ResponseEntity<>(author, HttpStatus.OK);
+
+           return new ResponseEntity<>(author, HttpStatus.OK);
+       
     }
 
     //Obtener todos los author

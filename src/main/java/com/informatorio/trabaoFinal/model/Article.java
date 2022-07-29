@@ -1,5 +1,6 @@
 package com.informatorio.trabaoFinal.model;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -23,6 +24,7 @@ public class Article {
     @Column(columnDefinition = "LONGBLOB")
     @Type(type = "org.hibernate.type.TextType")
     private String content;
+
 
     @ManyToOne
     @JoinColumn(name="author_id", nullable = false)
