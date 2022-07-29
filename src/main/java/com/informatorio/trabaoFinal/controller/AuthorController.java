@@ -79,13 +79,13 @@ public class AuthorController {
 
     }
     //Buscar authors creados despues de una fecha dada
-    @GetMapping("/created")
+    @GetMapping("/byDate")
     public Set<AuthorDTO> getAuthorByCreatedAT(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fecha){
         return iAuthorService.getAuthorWithCreatedAT(fecha);
 
     }
     //Buscar authors creados despues de una fecha dada paginado
-    @GetMapping("/created/page/{pages}")
+    @GetMapping("/byDate/page/{pages}")
     public Page<AuthorDTO> getAuthorByCreatedATPage(@PathVariable Integer pages, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fecha){
 
         Pageable pageable = PageRequest.of(pages, 5);

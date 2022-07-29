@@ -45,14 +45,14 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body("El Article ha sido marcado como Publicado");
     }
     //Traer article por id
-    @GetMapping("traer/{id}")
+    @GetMapping("articleById/{id}")
     public ArticleDTO getArticle(@PathVariable Long id){
 
         return iArticleService.bringArticleById(id);
     }
 
     //Modificar article
-    @PutMapping("/modifica")
+    @PutMapping("/putArticle")
     public ResponseEntity<Article> modifyArticle(@RequestBody ArticleDTO newArticle) {
         Article article = iArticleService.updateArticle(newArticle);
 
