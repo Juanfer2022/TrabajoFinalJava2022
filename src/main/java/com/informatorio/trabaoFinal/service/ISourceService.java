@@ -1,7 +1,7 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.informatorio.trabaoFinal.model.Source;
-import com.informatorio.trabaoFinal.model.SourceDTO;
+import com.informatorio.trabaoFinal.dto.SourceDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

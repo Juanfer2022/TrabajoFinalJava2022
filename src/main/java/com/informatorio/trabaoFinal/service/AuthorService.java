@@ -1,6 +1,7 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.trabaoFinal.dto.AuthorDTO;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.*;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;

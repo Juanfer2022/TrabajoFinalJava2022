@@ -1,9 +1,10 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.informatorio.trabaoFinal.exceptions.Exceptions;
+import com.informatorio.trabaoFinal.exceptions.NewsAppException;
+import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Source;
-import com.informatorio.trabaoFinal.model.SourceDTO;
+import com.informatorio.trabaoFinal.dto.SourceDTO;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import com.informatorio.trabaoFinal.util.CodigoSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +33,20 @@ public class SourceService implements ISourceService {
     public void createSource(SourceDTO sourceDTO) {
 
         String code = sourceDTO.getName();
-        //codigoSource(code);
-
         Source source = mapper.convertValue(sourceDTO, Source.class);
         source.setCreateAt(LocalDate.now());
         source.setCode(codigoSource.crearcodigo(code));
         iSourceRepository.save(source);
     }
 
-    private void codigoSource(String code) {
-    }
+   // private void codigoSource(String code) {
+  //  }
 
     //Borrar Source
     public void deleteSource(Long id) {
         Optional<Source> source = iSourceRepository.findById(id);
         if (source.isEmpty()) {
-            throw new Exceptions("Source no encontrada", HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("Source no encontrado. id inexistente","id: ",id);
         }
         iSourceRepository.deleteById(id);
     }
@@ -55,22 +54,22 @@ public class SourceService implements ISourceService {
     public Source updateSource(SourceDTO sourceDTO) {
             Optional<Source> source1 = iSourceRepository.findById(sourceDTO.getId());
           if (source1.isEmpty()) {
-                throw new Exceptions("El Source que quiere" +
-                        " actualizar no existe. La Actualiacion se canceló", HttpStatus.NOT_FOUND);
+                 throw new NewsAppException("El Source que quiere actualizar no existe.  ",
+                      HttpStatus.NOT_FOUND," La Actualiacion se canceló.");
             }
             //sourceDTO.setId(sourceDTO.getId());
             Source source2 = mapper.convertValue(sourceDTO, Source.class);
-
+          
             return iSourceRepository.save(source2);
         }
-
+        //Tarer un source por id
         public SourceDTO mostrarSource(Long id){
 
             SourceDTO sourceDTO=null;
             Optional<Source> source=iSourceRepository.findById(id);
             if(source.isEmpty()){
 
-                throw new Exceptions("Source no encontrada. id inexistente", HttpStatus.NOT_FOUND);
+                throw new ResourceNotFoundException("Source no encontrada. Id inexistente. ","id: ",id);
             }
             sourceDTO = mapper.convertValue(source, SourceDTO.class);
             return sourceDTO;
@@ -78,14 +77,16 @@ public class SourceService implements ISourceService {
     //Mostrar todoss
     public Collection<SourceDTO> getAllSource(){
         List<Source> sourceList= iSourceRepository.findAll();
-       List<SourceDTO> sourceDTOS= sourceList.stream()
-               .map(source -> mapper.convertValue(source, SourceDTO.class))
-               .collect(Collectors.toList());
-        // Set<SourceDTO> sourceDTOSet = new HashSet<>();
-        //for (Source source: sourceList){
-         //   sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
-        //}
-        return sourceDTOS;//sourceDTOSet;
+
+            List<SourceDTO> sourceDTOS = sourceList.stream()
+                    .map(source -> mapper.convertValue(source, SourceDTO.class))
+                    .collect(Collectors.toList());
+            // Set<SourceDTO> sourceDTOSet = new HashSet<>();
+            //for (Source source: sourceList){
+            //   sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));
+            //}
+            return sourceDTOS;//sourceDTOSet;
+
     }
 
    //Mostrar todoss con paginacion
@@ -97,6 +98,11 @@ public class SourceService implements ISourceService {
     //Buscar por una palabra dada
     public Set<SourceDTO> getSourceWithNameLike(String name){
         Set<Source> sources = iSourceRepository.getSourceByNameLike(name);
+
+        if((sources.size()==0) || (name.length()==0)){
+            throw new NewsAppException("Source", HttpStatus.NOT_FOUND,
+                    "Ningún Source coincide con la búsqueda. Búsqueda cancelada.");
+        }
         Set<SourceDTO> sourceDTOSet = new HashSet<>();
         for (Source source: sources){
             sourceDTOSet.add(mapper.convertValue(source, SourceDTO.class));

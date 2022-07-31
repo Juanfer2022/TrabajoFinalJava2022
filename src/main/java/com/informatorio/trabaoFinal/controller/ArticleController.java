@@ -2,9 +2,7 @@ package com.informatorio.trabaoFinal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.model.Article;
-import com.informatorio.trabaoFinal.model.ArticleDTO;
-import com.informatorio.trabaoFinal.model.Author;
-import com.informatorio.trabaoFinal.model.AuthorDTO;
+import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import com.informatorio.trabaoFinal.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 
 @RestController

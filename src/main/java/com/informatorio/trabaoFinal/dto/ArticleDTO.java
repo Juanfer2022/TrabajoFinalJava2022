@@ -1,5 +1,7 @@
-package com.informatorio.trabaoFinal.model;
+package com.informatorio.trabaoFinal.dto;
 
+import com.informatorio.trabaoFinal.model.Author;
+import com.informatorio.trabaoFinal.model.Source;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

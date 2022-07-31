@@ -1,11 +1,10 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.informatorio.trabaoFinal.model.Author;
-import com.informatorio.trabaoFinal.model.AuthorDTO;
+import com.informatorio.trabaoFinal.dto.AuthorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 

@@ -3,7 +3,7 @@ package com.informatorio.trabaoFinal.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.model.Article;
-import com.informatorio.trabaoFinal.model.ArticleDTO;
+import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,5 +100,7 @@ public class ArticleService implements IArticleService{
             return new PageImpl<>(articleDTOList);
             }
     }
+
+
 
 }

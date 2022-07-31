@@ -13,4 +13,6 @@ public interface ISourceRepository  extends JpaRepository<Source, Long> {
     @Query("from Source s where s.name like %:name%")
     Set<Source> getSourceByNameLike(@Param("name")String name);
 
+    @Query("update Source s set s.name = name, s.code = code where s.id = ids")
+    Set<Source> updateSource(@Param("name,code, ids")String name,String code, Long ids);
 }
