@@ -11,11 +11,10 @@ import java.util.Set;
 public interface ISourceService {
     public void createSource(SourceDTO sourceDTO);
     public void deleteSource(Long id);
-    public Source updateSource(SourceDTO sourceDTO);
+    //public Source updateSource(SourceDTO sourceDTO);
     public SourceDTO mostrarSource(Long id);
     public Collection<SourceDTO> getAllSource();
-    public Page<Source> getAllSource(Pageable pageable);
-
-
+    public Page<SourceDTO> getAllSource(Pageable pageable);
+    public SourceDTO updateSource(String name, Long id);
     public Set<SourceDTO> getSourceWithNameLike(String name);
 }

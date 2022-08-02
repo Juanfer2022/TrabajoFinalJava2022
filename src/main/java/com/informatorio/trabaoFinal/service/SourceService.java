@@ -1,17 +1,19 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.trabaoFinal.dto.SourceDTO;
 import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Source;
-import com.informatorio.trabaoFinal.dto.SourceDTO;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import com.informatorio.trabaoFinal.util.CodigoSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,19 +52,18 @@ public class SourceService implements ISourceService {
         }
         iSourceRepository.deleteById(id);
     }
-    //Modificar Source
-    public Source updateSource(SourceDTO sourceDTO) {
-            Optional<Source> source1 = iSourceRepository.findById(sourceDTO.getId());
-          if (source1.isEmpty()) {
-                 throw new NewsAppException("El Source que quiere actualizar no existe.  ",
-                      HttpStatus.NOT_FOUND," La Actualiacion se canceló.");
-            }
-            //sourceDTO.setId(sourceDTO.getId());
-            Source source2 = mapper.convertValue(sourceDTO, Source.class);
-          
-            return iSourceRepository.save(source2);
-        }
-        //Tarer un source por id
+
+
+  //Modificar source
+   public SourceDTO updateSource(String name, Long id){
+       Source source=iSourceRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Source", "id", id));
+
+       source.setName(name);
+       source.setCode(codigoSource.crearcodigo(name));
+       Source sourceSave=iSourceRepository.save(source);
+       return mapper.convertValue(sourceSave, SourceDTO.class);
+   }
+   //Mostrar un source por id
         public SourceDTO mostrarSource(Long id){
 
             SourceDTO sourceDTO=null;
@@ -90,9 +91,16 @@ public class SourceService implements ISourceService {
     }
 
    //Mostrar todoss con paginacion
-    public Page<Source> getAllSource(Pageable pageable) {
+    public Page<SourceDTO> getAllSource(Pageable pageable) {
 
-        return iSourceRepository.findAll(pageable);
+
+        Page<Source> page = iSourceRepository.findAll(pageable);
+       // List<SourceDTO> sourceDTOList = Collections.emptyList();
+        List<SourceDTO> sourceDTOS =  page.getContent().stream().map(source -> mapper
+                .convertValue(source, SourceDTO.class)).collect(Collectors.toList());
+
+        //sourceDTOList = sourceDTOS;
+        return new PageImpl<>(sourceDTOS);
     }
 
     //Buscar por una palabra dada
