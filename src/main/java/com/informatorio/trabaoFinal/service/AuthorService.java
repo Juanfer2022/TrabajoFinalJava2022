@@ -86,8 +86,6 @@ public class AuthorService implements IAuthorService {
     }
 
     //Mostrar todos los author con paginacion
-
-
     public Page<AuthorDTO> getAllAuthor(Pageable pageable){
         Page<Author> page = iAuthorRepository.findAll(pageable);
         List<AuthorDTO> authorDTOS = page.getContent().stream().map(author -> mapper
@@ -100,6 +98,10 @@ public class AuthorService implements IAuthorService {
     //Buscar por un string en fullname
     public Set<AuthorDTO> getAuthorWithFullNameLike(String fullname) {
         Set<Author> authors = iAuthorRepository.getAuthorByFullNameLike(fullname);
+        if(authors.isEmpty()){
+            throw new NewsAppException("Error.  "
+                    ,HttpStatus.NOT_FOUND," BUSQUE FALLIDA. NINGUN REGISTRO EN FULLNAME COINCIDE CON LA BUSQUEDA LANZADA.");
+        }
         Set<AuthorDTO> authorDTOS = new HashSet<>();
         for (Author author : authors) {
             authorDTOS.add(mapper.convertValue(author, AuthorDTO.class));
