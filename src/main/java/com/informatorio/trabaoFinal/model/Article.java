@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,13 +17,18 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
+    @NotBlank
+    private String urlToImage;
+    @NotBlank
     private String url;
     private LocalDate publishedAt;
     private boolean published;
-    @Column(columnDefinition = "LONGBLOB")
-    @Type(type = "org.hibernate.type.TextType")
+    @NotBlank
+    @Lob
     private String content;
 
 

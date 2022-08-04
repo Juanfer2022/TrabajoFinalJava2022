@@ -1,6 +1,7 @@
 package com.informatorio.trabaoFinal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.trabaoFinal.dto.AuthorDTO;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
@@ -12,6 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Set;
 
 
 @RestController
@@ -29,7 +34,7 @@ public class ArticleController {
 
     //Crear author
     @PostMapping
-    public ResponseEntity<?> createArticle(@RequestBody ArticleDTO articleDTO) {
+    public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDTO articleDTO) {
 
         iArticleService.createArticle(articleDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Article creado");
@@ -41,6 +46,10 @@ public class ArticleController {
         iArticleService.updateFinished(id);
         return ResponseEntity.status(HttpStatus.OK).body("El Article ha sido marcado como Publicado");
     }
+    @GetMapping("/updatePublished")
+    public Set<ArticleDTO> allPublished(){
+        return iArticleService.showAllPublished();
+    }
     //Traer article por id
     @GetMapping("articleById/{id}")
     public ArticleDTO getArticle(@PathVariable Long id){
@@ -49,11 +58,11 @@ public class ArticleController {
     }
 
     //Modificar article
-    @PutMapping("/putArticle")
-    public ResponseEntity<Article> modifyArticle(@RequestBody ArticleDTO newArticle) {
-        Article article = iArticleService.updateArticle(newArticle);
+    @PutMapping("/{id}")
+    public ResponseEntity<ArticleDTO> modifyArticle(@PathVariable Long id, @RequestBody ArticleDTO articleDTO) {
+        //Article article = iArticleService.updateArticle(articleDTO);
 
-        return new ResponseEntity<>(article, HttpStatus.OK);
+        return new ResponseEntity<>(iArticleService.updateArticle(articleDTO, id), HttpStatus.OK);
 
     }
     //Borrar article
@@ -65,10 +74,10 @@ public class ArticleController {
     }
 
     @GetMapping("/allarticles/pages")
-    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages,String title)
+    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages,String wordToSearch)
     {
         Pageable pageable = PageRequest.of(pages, 3);
-        return iArticleService.getAllArticleLikePage(pageable, title);
+        return iArticleService.getAllArticleLikePage(pageable, wordToSearch);
     }
 
 

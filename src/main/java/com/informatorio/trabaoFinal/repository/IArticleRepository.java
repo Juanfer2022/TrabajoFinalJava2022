@@ -20,12 +20,17 @@ public interface IArticleRepository extends JpaRepository<Article, Long> {
     public void markAsPublished(@Param("id") Long id);
 
     ///buscar article por una palabra
-    @Query("from Article a where a.published =1 and (a.title like %:title% or a.description like %:title%)")
-    Set<Article> getArticleByTitleLike(@Param("title") String title);
+    //Query("from Article a where a.published =1 and (a.title like %:title% or a.description like %:title%)")
+    @Query("from  Article ar inner join Author au on ar.author.id=au.id where ar.published=1 and (ar.title like '%:wordToSearch%' or ar.description like '%:wordToSearch%' or ar.content like '%:wordToSearch%' or au.fullname like '%:wordToSearch%')")
+    Page<Article> getArticleByPublishedAndTitleOrDescriptionAndFullname(@Param("wordToSearch")Pageable pageable, String wordToSearch);
+    //Set<Article> getArticleByTitleLike(@Param("title") String title);
 
     //Query para buscar article por un string mayor a 2 caracteres,
     // que haya sido publicado y por los campos title y description
     @Query("from Article a where a.published =1 and (a.title like %:title% or a.description like %:title%)")
     Page<Article> getArticleByTitleLikePage(@Param("title") Pageable pageable, String title);
+
+    @Query("from Article a where a.published = 1")
+    Set<Article> showArticlePublished();
 }
 

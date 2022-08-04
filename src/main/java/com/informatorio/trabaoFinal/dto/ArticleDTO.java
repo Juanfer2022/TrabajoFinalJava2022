@@ -6,40 +6,42 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 public class ArticleDTO {
     private Long id;
+
     private String title;
+
     private String description;
+
+    private boolean published;
+
+    private String urlToImage;
     private String url;
-    //private LocalDate publishedAt = LocalDate.now();
+
     private String content;
-    //private boolean published= false;
+
     private Author author;
     private Source source;
-    private int size;
-    private int totalElements;
-    private int page;
-    private int totalPage;
+    private LocalDate publishedAt;
 
-    public ArticleDTO(Long id, String title, String description, String url, String content, Author author
-            , Source source, int size, int totalElements, int page, int totalPage) {
+    public ArticleDTO(Long id, String title, String description
+            , boolean published, String urlToImage, String url, String content
+            , Author author, Source source, LocalDate publishedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.published = published;
+        this.urlToImage = urlToImage;
         this.url = url;
         this.content = content;
+        this.publishedAt = publishedAt;
         this.author = author;
         this.source = source;
-        this.size = size;
-        this.totalElements = totalElements;
-        this.page = page;
-        this.totalPage = totalPage;
-    }
 
-    //public ArticleDTO(Long id, String title, String description, String url, String content, Author author, Source source) {
-    //}
+    }
 }
