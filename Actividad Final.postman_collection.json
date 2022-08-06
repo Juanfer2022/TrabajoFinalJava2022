@@ -559,6 +559,31 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "buscar por una palabra con join",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/articles/allarticles?wordToSearch=Solis",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"articles",
+								"allarticles"
+							],
+							"query": [
+								{
+									"key": "wordToSearch",
+									"value": "Solis"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

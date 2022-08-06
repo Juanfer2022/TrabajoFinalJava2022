@@ -15,19 +15,15 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 public class ArticleService implements IArticleService{
 
     @Autowired
     IArticleRepository iArticleRepository;
-
     @Autowired
     ObjectMapper mapper;
-
-
-
 
     // Crear un Article
     public void createArticle(ArticleDTO articleDTO) {
@@ -70,8 +66,6 @@ public class ArticleService implements IArticleService{
         article.setContent(articleDTO.getContent());
         Article articlesave = iArticleRepository.save(article);
     return mapper.convertValue(articlesave, ArticleDTO.class);
-
-
     }
     //Borrar un Article
     public void deleteArticle(Long id) {
@@ -81,32 +75,37 @@ public class ArticleService implements IArticleService{
         }
         iArticleRepository.deleteById(id);
     }
+    //buscar article por un string mayor a 2 caracteres,
+    // que haya sido publicado y por los campos title y description
+
+    public Set<ArticleDTO> getAllArticleLike(String wordToSearch){
+
+        Set<Article> articles = iArticleRepository.
+                getArticleByPublishedAndTitleOrDescriptionAndFullnameSP(wordToSearch);
+
+        if(articles.isEmpty()){
+            throw new NewsAppException("Error.  "
+                    ,HttpStatus.NOT_FOUND," BUSQUE FALLIDA. NINGUN REGISTRO  COINCIDE CON LA BUSQUEDA LANZADA.");
+        }
+        Set<ArticleDTO> articleDTOSet = new HashSet<>();
+        for (Article article: articles){
+            articleDTOSet.add(mapper.convertValue(article, ArticleDTO.class));
+        }
+        return articleDTOSet;
+    }
 
     // buscar article por un string mayor a 2 caracteres,
-    // que haya sido publicado y por los campos title y description
-    public Page<ArticleDTO>  getAllArticleLikePage(Pageable pageable, String wordToSearch) {
+    // que haya sido publicado y por los campos title y description paginado
+   public Page<ArticleDTO> getAllArticleLikePage(Pageable pageable, String wordToSearch){
 
-            Page<Article> page = iArticleRepository.getArticleByPublishedAndTitleOrDescriptionAndFullname(pageable, wordToSearch);
-            int totalCont = (int) page.getTotalElements();
-            List<ArticleDTO> articleDTOList = Collections.emptyList();
+        List<Article> articlePage = iArticleRepository.
+                getArticleByPublishedAndTitleOrDescriptionAndFullname( wordToSearch);
 
-        if ((wordToSearch.length() < 3) || (wordToSearch == "" )){
-            throw new NewsAppException("Error.  "
-                    ,HttpStatus.BAD_REQUEST," La busqueda debe tener al menos 3 caracteres.");
-        }
-           else if(totalCont == 0) {
-            throw new NewsAppException("Error.  "
-                    ,HttpStatus.NOT_FOUND," No hay registros que coincidan con la busqueda lanzada. O" +
-                    " no hay Articles publicados");
-        }else {
-                List<ArticleDTO> articleDTOS =  page.getContent().stream().map(article -> mapper
-                        .convertValue(article, ArticleDTO.class)).collect(Collectors.toList());
-                articleDTOList = articleDTOS;
+        List<ArticleDTO> articleDTOList= articlePage.stream().map(article -> mapper.convertValue(
+                article, ArticleDTO.class)).toList();
+        return new PageImpl<>(articleDTOList);
+   }
 
-            return new PageImpl<>(articleDTOList);
-            }
-
-    }
     // Traer todos los articles publicados
     public Set<ArticleDTO> showAllPublished(){
         Set<Article> articles = iArticleRepository.showArticlePublished();

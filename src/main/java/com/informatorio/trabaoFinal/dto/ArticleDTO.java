@@ -18,7 +18,7 @@ public class ArticleDTO {
 
     private String description;
 
-    private boolean published;
+    private Boolean published;
 
     private String urlToImage;
     private String url;
@@ -29,9 +29,8 @@ public class ArticleDTO {
     private Source source;
     private LocalDate publishedAt;
 
-    public ArticleDTO(Long id, String title, String description
-            , boolean published, String urlToImage, String url, String content
-            , Author author, Source source, LocalDate publishedAt) {
+    public ArticleDTO(Long id, String title, String description, Boolean published, String urlToImage,
+                      String url, String content, Author author, Source source, LocalDate publishedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -39,9 +38,12 @@ public class ArticleDTO {
         this.urlToImage = urlToImage;
         this.url = url;
         this.content = content;
-        this.publishedAt = publishedAt;
         this.author = author;
         this.source = source;
+        this.publishedAt = publishedAt;
+    }
+
+    public ArticleDTO() {
 
     }
 }

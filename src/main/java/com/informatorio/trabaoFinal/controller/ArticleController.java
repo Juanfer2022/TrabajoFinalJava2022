@@ -1,8 +1,6 @@
 package com.informatorio.trabaoFinal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.informatorio.trabaoFinal.dto.AuthorDTO;
-import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import com.informatorio.trabaoFinal.service.IArticleService;
@@ -15,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -73,12 +71,18 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body("Article removido");
     }
 
-    @GetMapping("/allarticles/pages")
-    public Page<ArticleDTO> allArticlesPages(@RequestParam Integer pages,String wordToSearch)
-    {
+
+    @GetMapping("/allarticles")
+    Set<ArticleDTO> allArticles(@RequestParam String wordToSearch){
+        return iArticleService.getAllArticleLike(wordToSearch);
+    }
+    // buscar article por un string mayor a 2 caracteres,
+    // que haya sido publicado y por los campos title y description paginado
+   @GetMapping("/allarticles/page")
+    Page<ArticleDTO>  allArticlePage(@RequestParam Integer pages, String wordToSearch){
         Pageable pageable = PageRequest.of(pages, 3);
         return iArticleService.getAllArticleLikePage(pageable, wordToSearch);
-    }
+   }
 
 
 }
