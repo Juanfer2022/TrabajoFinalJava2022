@@ -1,20 +1,25 @@
 package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Article;
-import com.informatorio.trabaoFinal.dto.ArticleDTO;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
+import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -24,23 +29,34 @@ public class ArticleService implements IArticleService{
     IArticleRepository iArticleRepository;
     @Autowired
     ObjectMapper mapper;
+    @Autowired
+    ISourceRepository iSourceRepository;
 
     // Crear un Article
     public void createArticle(ArticleDTO articleDTO) {
+
+
+
         Article article = mapper.convertValue(articleDTO, Article.class);
         article.setPublishedAt(LocalDate.now());
         article.setPublished(false);
+
         iArticleRepository.save(article);
     }
     //Poner article como publicado
     @Transactional
 
-
     public void updateFinished(Long id){
-       Optional<Article> article = iArticleRepository.findById(id);
-        if (article.isEmpty()) {
+
+        Optional<Article> article = iArticleRepository.findById(id);
+        if (!article.isPresent()) {
             throw new ResourceNotFoundException("Article no encontrado. id inexistente","id: ",id);
         }
+        Boolean article1= article.get().getPublished();
+        if (article1){
+            throw new ResourceNotFoundException("El Article ya esta publicado","id: ",id);
+        }
+
         iArticleRepository.markAsPublished(id);
     }
 
@@ -75,24 +91,7 @@ public class ArticleService implements IArticleService{
         }
         iArticleRepository.deleteById(id);
     }
-    //buscar article por un string mayor a 2 caracteres,
-    // que haya sido publicado y por los campos title y description
 
-    public Set<ArticleDTO> getAllArticleLike(String wordToSearch){
-
-        Set<Article> articles = iArticleRepository.
-                getArticleByPublishedAndTitleOrDescriptionAndFullnameSP(wordToSearch);
-
-        if(articles.isEmpty()){
-            throw new NewsAppException("Error.  "
-                    ,HttpStatus.NOT_FOUND," BUSQUE FALLIDA. NINGUN REGISTRO  COINCIDE CON LA BUSQUEDA LANZADA.");
-        }
-        Set<ArticleDTO> articleDTOSet = new HashSet<>();
-        for (Article article: articles){
-            articleDTOSet.add(mapper.convertValue(article, ArticleDTO.class));
-        }
-        return articleDTOSet;
-    }
 
     // buscar article por un string mayor a 2 caracteres,
     // que haya sido publicado y por los campos title y description paginado

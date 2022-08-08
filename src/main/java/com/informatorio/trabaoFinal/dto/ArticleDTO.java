@@ -2,11 +2,9 @@ package com.informatorio.trabaoFinal.dto;
 
 import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.model.Source;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -28,6 +26,7 @@ public class ArticleDTO {
     private Author author;
     private Source source;
     private LocalDate publishedAt;
+   
 
     public ArticleDTO(Long id, String title, String description, Boolean published, String urlToImage,
                       String url, String content, Author author, Source source, LocalDate publishedAt) {

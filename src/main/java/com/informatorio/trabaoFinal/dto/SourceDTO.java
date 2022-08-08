@@ -1,6 +1,5 @@
 package com.informatorio.trabaoFinal.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,9 @@ public class SourceDTO {
     private String name;
     private String code;
     private LocalDate createAt;
+    //private Long related;
+
+
 
     public SourceDTO(Long id, String name, String code, LocalDate createAt) {
         this.id = id;

@@ -13,12 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Set;
 
 
 @RestController
-@RequestMapping("/articles")
+@RequestMapping("/article")
 public class ArticleController {
 
     @Autowired
@@ -30,7 +29,7 @@ public class ArticleController {
     @Autowired
     IArticleService iArticleService;
 
-    //Crear author
+    //Crear Article
     @PostMapping
     public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDTO articleDTO) {
 
@@ -39,7 +38,7 @@ public class ArticleController {
     }
 
     //Marcar article como publicado
-    @PatchMapping("/updateFinishes/{id}")
+    @PatchMapping("/updateFinishe/{id}")
     public ResponseEntity<?> markAsPublished(@PathVariable("id") Long id){
         iArticleService.updateFinished(id);
         return ResponseEntity.status(HttpStatus.OK).body("El Article ha sido marcado como Publicado");
@@ -72,13 +71,10 @@ public class ArticleController {
     }
 
 
-    @GetMapping("/allarticles")
-    Set<ArticleDTO> allArticles(@RequestParam String wordToSearch){
-        return iArticleService.getAllArticleLike(wordToSearch);
-    }
+
     // buscar article por un string mayor a 2 caracteres,
     // que haya sido publicado y por los campos title y description paginado
-   @GetMapping("/allarticles/page")
+   @GetMapping("/allarticle/page")
     Page<ArticleDTO>  allArticlePage(@RequestParam Integer pages, String wordToSearch){
         Pageable pageable = PageRequest.of(pages, 3);
         return iArticleService.getAllArticleLikePage(pageable, wordToSearch);

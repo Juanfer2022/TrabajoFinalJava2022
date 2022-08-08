@@ -1,7 +1,5 @@
 package com.informatorio.trabaoFinal.controller;
 
-import com.informatorio.trabaoFinal.exceptions.NewsAppException;
-import com.informatorio.trabaoFinal.model.Source;
 import com.informatorio.trabaoFinal.dto.SourceDTO;
 import com.informatorio.trabaoFinal.service.ISourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,8 @@ public class SourceController {
 
     //Modificar un source
     @PutMapping("/{id}")
-    public ResponseEntity<SourceDTO> updateSource(@RequestParam("name") String name, @PathVariable("id")Long id){
+    public ResponseEntity<?> updateSource(@RequestParam("name") String name, @PathVariable("id")Long id){
+
         return new  ResponseEntity<>(iSourceService.updateSource( name,id), HttpStatus.OK);
     }
     //Mostrar un source

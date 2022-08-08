@@ -38,6 +38,7 @@ public class SourceService implements ISourceService {
         Source source = mapper.convertValue(sourceDTO, Source.class);
         source.setCreateAt(LocalDate.now());
         source.setCode(codigoSource.crearcodigo(code));
+       // source.setRelated(0L);
         iSourceRepository.save(source);
     }
 
@@ -46,12 +47,15 @@ public class SourceService implements ISourceService {
 
     //Borrar Source
     public void deleteSource(Long id) {
-        Optional<Source> source = iSourceRepository.findById(id);
-        if (source.isEmpty()) {
-            throw new ResourceNotFoundException("Source no encontrado. id inexistente","id: ",id);
-        }
-        iSourceRepository.deleteById(id);
+
+            Optional<Source> source = iSourceRepository.findById(id);
+            if (source.isEmpty()) {
+                throw new ResourceNotFoundException("Source no encontrado. id inexistente", "id: ", id);
+            }
+
+            iSourceRepository.deleteById(id);
     }
+
 
 
   //Modificar source
