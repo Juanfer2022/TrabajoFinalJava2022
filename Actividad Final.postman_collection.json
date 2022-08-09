@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"El Litoral\",\r\n    \"code\":\"el-litoral\"\r\n    \r\n\r\n}   \r\n ",
+							"raw": "{\r\n    \"name\":\"Las Gallinas\"\r\n    \r\n    \r\n\r\n}   \r\n ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstname\": \"Patricia\",\r\n    \"lastname\": \"Campos\",\r\n    \"fullname\":\"Patricia Campos\"\r\n}\r\n ",
+							"raw": "{\r\n    \"firstname\": \"Fausta\",\r\n    \"lastname\": \"Ciarlentinni\"\r\n    \r\n    \r\n}\r\n ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -228,14 +228,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/8",
+							"raw": "localhost:8080/authors/12",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"authors",
-								"8"
+								"12"
 							]
 						}
 					},
@@ -437,7 +437,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"title\":\"El pronóstico del tiempo en Resistencia y alrededores.\",\r\n    \"description\":\"Volvió el calor a la región, y se quedará por varios días\",\r\n    \"url\":\"https://datachaco.com/contenido/141833/volvio-el-calor-a-la-region-y-se-quedara-por-varios-dias\",\r\n    \"content\":\"Tras varios días con temperaturas mínimas inferiores a los 10°C, regresó el calor a la región, y se espera tiempo bueno, sin lluvias, nubosidad variable y con máximas cercanas a los 30 grados al menos hasta el lunes en Resistencia y alrededores, según el pronóstico del Servicio Meteorológico Nacional.\",\r\n    \"author\":{\"id\":2},\r\n    \"source\":{\"id\":2}\r\n\r\n    \r\n}\r\n   \r\n\r\n  \r\n  ",
+							"raw": "{ \"title\": \"Chiquito Romero: ¿un gran refuerzo para Boca?\",\r\n    \"description\": \" Chiquito Romero es o no un gran refuerzo para este Boca.\",\r\n    \"content\": \"En este podcast, los conductores Emi Pinsón y Vero Brunati debaten sobre si el club trajo a un arquero de jerarquía y presente o a uno con un gran pasado pero que es una incógnita su nivel actual. Además, la particularidad de los arqueros grandes (de edad) en los equipos grandes.\",\r\n    \"urlToImage\": \"https://images.ole.com.ar/2022/08/08/B_4n_owsh_290x290__1.jpg\",\r\n    \"url\": \"https://www.ole.com.ar/spotify/ole-podcast-spotify-romero-boca_0_pgOw5na07K.html\",\r\n    \"author\":{\"id\":1},\r\n    \"source\":{\"id\":1}\r\n\r\n    \r\n}\r\n   \r\n\r\n  \r\n  ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -445,13 +445,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/articles",
+							"raw": "localhost:8080/article/1/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles"
+								"article",
+								"1",
+								"1"
 							]
 						}
 					},
@@ -463,15 +465,15 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/articles/updateFinishes/111",
+							"raw": "localhost:8080/article/updateFinishe/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles",
-								"updateFinishes",
-								"111"
+								"article",
+								"updateFinishe",
+								"1"
 							]
 						}
 					},
@@ -483,13 +485,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/articles/1",
+							"raw": "localhost:8080/article/1/ 1/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles",
+								"article",
+								"1",
+								" 1",
 								"1"
 							]
 						}
@@ -500,7 +504,29 @@
 					"name": "Mostrar article por palabra mar a tres caracteres, publicados y paginado",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/article/allarticle/page?pages=0&wordToSearch=Solis",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"allarticle",
+								"page"
+							],
+							"query": [
+								{
+									"key": "pages",
+									"value": "0"
+								},
+								{
+									"key": "wordToSearch",
+									"value": "Solis"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -510,13 +536,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/articles/articleById/1",
+							"raw": "localhost:8080/article/articleById/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles",
+								"article",
 								"articleById",
 								"1"
 							]
@@ -531,7 +557,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"El pronóstico del tiempo en El Impenetrable y alrededores.\",\r\n    \"description\": \"Volvió el calor a la región, y se quedará por varios días\",\r\n    \"url\": \"https://datachaco.com/contenido/141833/volvio-el-calor-a-la-region-y-se-quedara-por-varios-dias\",\r\n    \"content\": \"Tras varios días con temperaturas mínimas inferiores a los 10°C, regresó el calor a la región, y se espera tiempo bueno, sin lluvias, nubosidad variable y con máximas cercanas a los 30 grados al menos hasta el lunes en Resistencia y alrededores, según el pronóstico del Servicio Meteorológico Nacional.\",\r\n    \"author\": {\r\n        \"id\": 2,\r\n        \"firstname\": \"Luis\",\r\n        \"lastname\": \"Vargas\",\r\n        \"fullname\": \"Luis  Vargas\",\r\n        \"createdAT\": \"2022-07-26\"\r\n    },\r\n    \"source\": {\r\n        \"id\": 2,\r\n        \"name\": \"Datachaco4\",\r\n        \"code\": \"data-chuco4\",\r\n        \"createAt\": \"2022-07-22\"\r\n    },\r\n    \"size\": 0,\r\n    \"totalElements\": 0,\r\n    \"page\": 0,\r\n    \"totalPage\": 0\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"El pronóstico del tiempo en El Impenetrable pulmon de Argentina \",\r\n    \"description\": \"Volvió el calor a la región, y se quedará por varios días\",\r\n    \"url\": \"https://datachaco.com/contenido/141833/volvio-el-calor-a-la-region-y-se-quedara-por-varios-dias\",\r\n    \"content\": \"Tras varios días con temperaturas mínimas inferiores a los 10°C, regresó el calor a la región, y se espera tiempo bueno, sin lluvias, nubosidad variable y con máximas cercanas a los 30 grados al menos hasta el lunes en Resistencia y alrededores, según el pronóstico del Servicio Meteorológico Nacional.\",\r\n    \"author\": {\r\n        \"id\": 2,\r\n        \"firstname\": \"Luis\",\r\n        \"lastname\": \"Vargas\",\r\n        \"fullname\": \"Luis  Vargas\",\r\n        \"createdAT\": \"2022-07-26\"\r\n    },\r\n    \"source\": {\r\n        \"id\": 2,\r\n        \"name\": \"Datachaco4\",\r\n        \"code\": \"data-chuco4\",\r\n        \"createAt\": \"2022-07-22\"\r\n    },\r\n    \"size\": 0,\r\n    \"totalElements\": 0,\r\n    \"page\": 0,\r\n    \"totalPage\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -539,14 +565,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/articles/modifica",
+							"raw": "localhost:8080/article/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles",
-								"modifica"
+								"article",
+								"1"
 							]
 						}
 					},
@@ -556,30 +582,46 @@
 					"name": "Mostrar articles publicados",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "buscar por una palabra con join",
-					"request": {
-						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/articles/allarticles?wordToSearch=Solis",
+							"raw": "localhost:8080/article/updatePublished?pages=0&wordToSearch=Chinguenguenza",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"articles",
-								"allarticles"
+								"article",
+								"updatePublished"
 							],
 							"query": [
 								{
+									"key": "pages",
+									"value": "0"
+								},
+								{
 									"key": "wordToSearch",
-									"value": "Solis"
+									"value": "Chinguenguenza"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despublicar Article",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/article/updateNotFinishe/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"updateNotFinishe",
+								""
 							]
 						}
 					},

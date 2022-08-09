@@ -30,10 +30,11 @@ public class ArticleController {
     IArticleService iArticleService;
 
     //Crear Article
-    @PostMapping
-    public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDTO articleDTO) {
+    @PostMapping("/{id}/{idAut}")
+    public ResponseEntity<?> createArticle(@PathVariable("id") Long id,@PathVariable("idAut") Long idAut,
+                                           @Valid @RequestBody ArticleDTO articleDTO) {
 
-        iArticleService.createArticle(articleDTO);
+        iArticleService.createArticle(articleDTO, id, idAut);
         return ResponseEntity.status(HttpStatus.OK).body("Article creado");
     }
 
@@ -42,6 +43,13 @@ public class ArticleController {
     public ResponseEntity<?> markAsPublished(@PathVariable("id") Long id){
         iArticleService.updateFinished(id);
         return ResponseEntity.status(HttpStatus.OK).body("El Article ha sido marcado como Publicado");
+    }
+//despublicar un article
+    @PatchMapping("/updateNotFinishe/{id}")
+    public ResponseEntity<?> markAsNotPublished(@PathVariable("id") Long id){
+        
+        iArticleService.updateNotFinished(id);
+        return ResponseEntity.status(HttpStatus.OK).body("El Article ya no esta publicado");
     }
     @GetMapping("/updatePublished")
     public Set<ArticleDTO> allPublished(){
@@ -63,9 +71,9 @@ public class ArticleController {
 
     }
     //Borrar article
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteArticle(@PathVariable Long id) {
-        iArticleService.deleteArticle(id);
+    @DeleteMapping("/{ids}/{idAut}/{id}")
+    public ResponseEntity<?> deleteArticle(@PathVariable Long ids, @PathVariable Long idAut, @PathVariable Long id) {
+        iArticleService.deleteArticle(ids,idAut, id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Article removido");
     }

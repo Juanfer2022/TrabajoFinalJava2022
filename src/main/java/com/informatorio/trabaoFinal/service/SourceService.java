@@ -38,7 +38,7 @@ public class SourceService implements ISourceService {
         Source source = mapper.convertValue(sourceDTO, Source.class);
         source.setCreateAt(LocalDate.now());
         source.setCode(codigoSource.crearcodigo(code));
-       // source.setRelated(0L);
+        source.setRelated(0L);
         iSourceRepository.save(source);
     }
 
@@ -49,10 +49,14 @@ public class SourceService implements ISourceService {
     public void deleteSource(Long id) {
 
             Optional<Source> source = iSourceRepository.findById(id);
+           Long enrelac = source.get().getRelated();
             if (source.isEmpty()) {
                 throw new ResourceNotFoundException("Source no encontrado. id inexistente", "id: ", id);
             }
-
+            if( enrelac == 1){
+                throw new ResourceNotFoundException("Accion no admitida. El Source esta relacionado con Article",
+                        "id: ", id);
+            }
             iSourceRepository.deleteById(id);
     }
 

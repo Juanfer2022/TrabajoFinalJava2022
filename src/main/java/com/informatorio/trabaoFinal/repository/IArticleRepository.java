@@ -19,6 +19,9 @@ public interface IArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
     @Query(value = "UPDATE Article SET published=true WHERE ID=:id")
     public void markAsPublished(@Param("id") Long id);
+    @Modifying
+    @Query(value = "UPDATE Article SET published=false WHERE ID=:id")
+    public void markNotPublished(@Param("id") Long id);
 
     ///buscar article por una palabra
     //Query("from Article a where a.published =1 and (a.title like %:title% or a.description like %:title%)")
@@ -41,5 +44,6 @@ public interface IArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("from Article a where a.published = 1")
     Set<Article> showArticlePublished();
+
 }
 

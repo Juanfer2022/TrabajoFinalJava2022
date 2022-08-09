@@ -2,10 +2,9 @@ package com.informatorio.trabaoFinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.trabaoFinal.dto.AuthorDTO;
-import com.informatorio.trabaoFinal.exceptions.Exceptions;
 import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
-import com.informatorio.trabaoFinal.model.*;
+import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +34,7 @@ public class AuthorService implements IAuthorService {
         author.setFullname(author.getFirstname() + " " + author
                 .getLastname());
         author.setCreatedAT(LocalDate.now());
+        author.setRelated(0L);
         iAuthorRepository.save(author);
     }
 
@@ -53,9 +53,14 @@ public class AuthorService implements IAuthorService {
     //B0rra un Author
     public void deleteAuthor(Long id) {
         Optional<Author> author = iAuthorRepository.findById(id);
+        Long enrelac = author.get().getRelated();
         if (author.isEmpty()) {
             throw new ResourceNotFoundException("Author no encontrado.El proceso de ELIMINACIO ha sido cancelado. ",
                     "id: ",id);
+        }
+        if( enrelac == 1){
+            throw new ResourceNotFoundException("Accion no admitida. El Author esta relacionado con Article",
+                    "id: ", id);
         }
         iAuthorRepository.deleteById(id);
     }
@@ -139,7 +144,8 @@ public class AuthorService implements IAuthorService {
                 author.getFirstname(),
                 author.getLastname(),
                 author.getFullname(),
-                author.getCreatedAT()
+                author.getCreatedAT(),
+                author.getRelated()
         )).collect(Collectors.toList()));
     }
 }

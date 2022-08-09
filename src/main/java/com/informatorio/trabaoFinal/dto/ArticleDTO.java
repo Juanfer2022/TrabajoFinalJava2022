@@ -15,17 +15,16 @@ public class ArticleDTO {
     private String title;
 
     private String description;
+    private String content;
 
     private Boolean published;
 
     private String urlToImage;
     private String url;
-
-    private String content;
-
+    private LocalDate publishedAt;
     private Author author;
     private Source source;
-    private LocalDate publishedAt;
+
    
 
     public ArticleDTO(Long id, String title, String description, Boolean published, String urlToImage,

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -26,4 +25,5 @@ public class Author {
     private String fullname;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate createdAT;
+    private Long related;
 }

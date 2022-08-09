@@ -6,6 +6,7 @@ import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
+import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,23 +32,23 @@ public class ArticleService implements IArticleService{
     ObjectMapper mapper;
     @Autowired
     ISourceRepository iSourceRepository;
+    @Autowired
+    IAuthorRepository iAuthorRepository;
 
     // Crear un Article
-    public void createArticle(ArticleDTO articleDTO) {
-
-
+    @Transactional
+    public void createArticle(ArticleDTO articleDTO, Long id, Long idAut) {
 
         Article article = mapper.convertValue(articleDTO, Article.class);
         article.setPublishedAt(LocalDate.now());
         article.setPublished(false);
-
+        iSourceRepository.sourceRelatedArticle(id);
+        iAuthorRepository.authorRelatedArticle(idAut);
         iArticleRepository.save(article);
     }
     //Poner article como publicado
     @Transactional
-
     public void updateFinished(Long id){
-
         Optional<Article> article = iArticleRepository.findById(id);
         if (!article.isPresent()) {
             throw new ResourceNotFoundException("Article no encontrado. id inexistente","id: ",id);
@@ -58,6 +59,20 @@ public class ArticleService implements IArticleService{
         }
 
         iArticleRepository.markAsPublished(id);
+    }
+    //despublicar un article
+    @Transactional
+    public void updateNotFinished(Long id){
+        Optional<Article> article = iArticleRepository.findById(id);
+        if (!article.isPresent()) {
+           throw new ResourceNotFoundException("Article inexistente","id: ",id);
+        }
+        Boolean article1= article.get().getPublished();
+        if (!article1){
+            throw new ResourceNotFoundException("El Article ya esta como 'NO PUBLICADO'","id: ",id);
+        }
+
+        iArticleRepository.markNotPublished(id);
     }
 
         //Trae un article por id
@@ -84,11 +99,15 @@ public class ArticleService implements IArticleService{
     return mapper.convertValue(articlesave, ArticleDTO.class);
     }
     //Borrar un Article
-    public void deleteArticle(Long id) {
+    @Transactional
+    public void deleteArticle(Long ids,Long idAut, Long id) {
         Optional<Article> article = iArticleRepository.findById(id);
         if (article.isEmpty()) {
-            throw new ResourceNotFoundException("Article inexistente.El proceso de ELIMINACIO ha sido cancelado ","id: ",id);
+            throw new ResourceNotFoundException("Article inexistente.El proceso de ELIMINACIO ha sido cancelado ",
+                    "id: ",id);
         }
+        iSourceRepository.sourceNotRelatedArticle(ids);
+        iAuthorRepository.authorNotRelatedArticle(idAut);
         iArticleRepository.deleteById(id);
     }
 

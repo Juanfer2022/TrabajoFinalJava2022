@@ -1,10 +1,8 @@
 package com.informatorio.trabaoFinal.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
@@ -16,13 +14,15 @@ public class AuthorDTO {
     private String lastname;
     private String fullname;
     private LocalDate createdAT;
+    private Long related;
 
-    public AuthorDTO(Long id, String firstname, String lastname, String fullname, LocalDate createdAT) {
+    public AuthorDTO(Long id, String firstname, String lastname, String fullname, LocalDate createdAT, Long related) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.fullname = fullname;
         this.createdAT = createdAT;
+        this.related = related;
     }
 
     public AuthorDTO() {
