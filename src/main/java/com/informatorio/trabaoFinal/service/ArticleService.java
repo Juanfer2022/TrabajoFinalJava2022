@@ -6,8 +6,6 @@ import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Article;
 import com.informatorio.trabaoFinal.repository.IArticleRepository;
-import com.informatorio.trabaoFinal.repository.IAuthorRepository;
-import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,10 +28,7 @@ public class ArticleService implements IArticleService{
     IArticleRepository iArticleRepository;
     @Autowired
     ObjectMapper mapper;
-    @Autowired
-    ISourceRepository iSourceRepository;
-    @Autowired
-    IAuthorRepository iAuthorRepository;
+
 
     // Crear un Article
     @Transactional
