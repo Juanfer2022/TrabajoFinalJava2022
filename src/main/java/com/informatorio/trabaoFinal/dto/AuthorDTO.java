@@ -14,15 +14,15 @@ public class AuthorDTO {
     private String lastname;
     private String fullname;
     private LocalDate createdAT;
-    private Long related;
+    //private Long related;
 
-    public AuthorDTO(Long id, String firstname, String lastname, String fullname, LocalDate createdAT, Long related) {
+
+    public AuthorDTO(Long id, String firstname, String lastname, String fullname, LocalDate createdAT) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.fullname = fullname;
         this.createdAT = createdAT;
-        this.related = related;
     }
 
     public AuthorDTO() {

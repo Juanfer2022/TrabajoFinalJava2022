@@ -25,5 +25,5 @@ public class Author {
     private String fullname;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate createdAT;
-    private Long related;
+    //private Long related;
 }

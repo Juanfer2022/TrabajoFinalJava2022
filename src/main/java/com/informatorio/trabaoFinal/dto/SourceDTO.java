@@ -13,15 +13,14 @@ public class SourceDTO {
     private String name;
     private String code;
     private LocalDate createAt;
-    private Long related;
+    //private Long related;
 
 
-    public SourceDTO(Long id, String name, String code, LocalDate createAt, Long related) {
+    public SourceDTO(Long id, String name, String code, LocalDate createAt) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.createAt = createAt;
-        this.related = related;
     }
 
     public SourceDTO() {

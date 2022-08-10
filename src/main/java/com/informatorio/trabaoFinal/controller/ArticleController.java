@@ -30,11 +30,10 @@ public class ArticleController {
     IArticleService iArticleService;
 
     //Crear Article
-    @PostMapping("/{id}/{idAut}")
-    public ResponseEntity<?> createArticle(@PathVariable("id") Long id,@PathVariable("idAut") Long idAut,
-                                           @Valid @RequestBody ArticleDTO articleDTO) {
+    @PostMapping
+    public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDTO articleDTO) {
 
-        iArticleService.createArticle(articleDTO, id, idAut);
+        iArticleService.createArticle(articleDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Article creado");
     }
 
@@ -71,9 +70,9 @@ public class ArticleController {
 
     }
     //Borrar article
-    @DeleteMapping("/{ids}/{idAut}/{id}")
-    public ResponseEntity<?> deleteArticle(@PathVariable Long ids, @PathVariable Long idAut, @PathVariable Long id) {
-        iArticleService.deleteArticle(ids,idAut, id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteArticle(@PathVariable Long id) {
+        iArticleService.deleteArticle(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Article removido");
     }

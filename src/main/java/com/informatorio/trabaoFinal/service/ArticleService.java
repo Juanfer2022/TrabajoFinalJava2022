@@ -37,13 +37,12 @@ public class ArticleService implements IArticleService{
 
     // Crear un Article
     @Transactional
-    public void createArticle(ArticleDTO articleDTO, Long id, Long idAut) {
+    public void createArticle(ArticleDTO articleDTO) {
 
         Article article = mapper.convertValue(articleDTO, Article.class);
         article.setPublishedAt(LocalDate.now());
         article.setPublished(false);
-        iSourceRepository.sourceRelatedArticle(id);
-        iAuthorRepository.authorRelatedArticle(idAut);
+
         iArticleRepository.save(article);
     }
     //Poner article como publicado
@@ -99,15 +98,12 @@ public class ArticleService implements IArticleService{
     return mapper.convertValue(articlesave, ArticleDTO.class);
     }
     //Borrar un Article
-    @Transactional
-    public void deleteArticle(Long ids,Long idAut, Long id) {
+    public void deleteArticle(Long id) {
         Optional<Article> article = iArticleRepository.findById(id);
         if (article.isEmpty()) {
             throw new ResourceNotFoundException("Article inexistente.El proceso de ELIMINACIO ha sido cancelado ",
                     "id: ",id);
         }
-        iSourceRepository.sourceNotRelatedArticle(ids);
-        iAuthorRepository.authorNotRelatedArticle(idAut);
         iArticleRepository.deleteById(id);
     }
 
