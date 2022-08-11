@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Las Gallinas\"\r\n    \r\n    \r\n\r\n}   \r\n ",
+							"raw": "{\r\n    \"name\":\"Las Gallinas6\"\r\n    \r\n    \r\n\r\n}   \r\n ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,13 +23,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/sources",
+							"raw": "localhost:8080/source",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources"
+								"source"
 							]
 						}
 					},
@@ -41,14 +41,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/sources/1",
+							"raw": "localhost:8080/source/6",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources",
-								"1"
+								"source",
+								"6"
 							]
 						}
 					},
@@ -69,24 +69,19 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/sources/3?name=Los Castillos On Line",
+							"raw": "localhost:8080/source/4?name=El Gallardo",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources",
-								"3"
+								"source",
+								"4"
 							],
 							"query": [
 								{
 									"key": "name",
-									"value": "Los Castillos On Line"
-								},
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"value": "El Gallardo"
 								}
 							]
 						}
@@ -111,14 +106,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/sources/2",
+							"raw": "localhost:8080/source/124",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources",
-								"2"
+								"source",
+								"124"
 							]
 						}
 					},
@@ -149,16 +144,25 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/sources/allsources/page/1",
+							"raw": "localhost:8080/source/allsource/page?page=0&tam=3",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources",
-								"allsources",
-								"page",
-								"1"
+								"source",
+								"allsource",
+								"page"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "tam",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -170,20 +174,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/sources/listname/?name=la",
+							"raw": "localhost:8080/source/listname/?name=allo",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"sources",
+								"source",
 								"listname",
 								""
 							],
 							"query": [
 								{
 									"key": "name",
-									"value": "la"
+									"value": "allo"
 								}
 							]
 						}
@@ -202,7 +206,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstname\": \"Fausta\",\r\n    \"lastname\": \"Ciarlentinni\"\r\n    \r\n    \r\n}\r\n ",
+							"raw": "{\r\n    \"firstname\": \"Fausta\",\r\n    \"lastname\": \"Ciarlentinni7\"\r\n    \r\n    \r\n}\r\n ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -210,13 +214,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/authors",
+							"raw": "localhost:8080/author",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors"
+								"author"
 							]
 						}
 					},
@@ -228,13 +232,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/12",
+							"raw": "localhost:8080/author/12",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
+								"author",
 								"12"
 							]
 						}
@@ -247,14 +251,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/1",
+							"raw": "localhost:8080/author/7",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
-								"1"
+								"author",
+								"7"
 							]
 						}
 					},
@@ -275,23 +279,23 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/authors/56?firstname=Paola&lastname=Grees",
+							"raw": "localhost:8080/author/1?firstname=Laura&lastname=Di Marco",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
-								"56"
+								"author",
+								"1"
 							],
 							"query": [
 								{
 									"key": "firstname",
-									"value": "Paola"
+									"value": "Laura"
 								},
 								{
 									"key": "lastname",
-									"value": "Grees"
+									"value": "Di Marco"
 								}
 							]
 						}
@@ -304,14 +308,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/allauthors",
+							"raw": "localhost:8080/author/allauthor",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
-								"allauthors"
+								"author",
+								"allauthor"
 							]
 						}
 					},
@@ -323,16 +327,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/allauthor/page/0",
+							"raw": "localhost:8080/author/allauthor/page/?page=0&tam=5",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
+								"author",
 								"allauthor",
 								"page",
-								"0"
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "tam",
+									"value": "5"
+								}
 							]
 						}
 					},
@@ -344,20 +358,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/fullname/?fullname=us",
+							"raw": "localhost:8080/author/fullname/?fullname=in",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
+								"author",
 								"fullname",
 								""
 							],
 							"query": [
 								{
 									"key": "fullname",
-									"value": "us"
+									"value": "in"
 								}
 							]
 						}
@@ -370,20 +384,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/byDate/?fecha=2022-07-25",
+							"raw": "localhost:8080/author/byDate/?fecha=2022-08-07",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
+								"author",
 								"byDate",
 								""
 							],
 							"query": [
 								{
 									"key": "fecha",
-									"value": "2022-07-25"
+									"value": "2022-08-07"
 								}
 							]
 						}
@@ -396,13 +410,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/authors/byDate/page/?pages=0&tam=3&fecha=2022-07-09",
+							"raw": "localhost:8080/author/byDate/page/?pages=0&tam=3&fecha=2022-07-31",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"authors",
+								"author",
 								"byDate",
 								"page",
 								""
@@ -418,7 +432,7 @@
 								},
 								{
 									"key": "fecha",
-									"value": "2022-07-09"
+									"value": "2022-07-31"
 								}
 							]
 						}
@@ -584,7 +598,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/article/updatePublished?pages=0&wordToSearch=Chinguenguenza",
+							"raw": "localhost:8080/article/updatePublished",
 							"host": [
 								"localhost"
 							],
@@ -592,16 +606,6 @@
 							"path": [
 								"article",
 								"updatePublished"
-							],
-							"query": [
-								{
-									"key": "pages",
-									"value": "0"
-								},
-								{
-									"key": "wordToSearch",
-									"value": "Chinguenguenza"
-								}
 							]
 						}
 					},
