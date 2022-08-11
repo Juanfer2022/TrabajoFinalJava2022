@@ -1,7 +1,5 @@
 package com.informatorio.trabaoFinal.controller;
 
-import com.informatorio.trabaoFinal.dto.SourceDTO;
-import com.informatorio.trabaoFinal.model.Author;
 import com.informatorio.trabaoFinal.dto.AuthorDTO;
 import com.informatorio.trabaoFinal.service.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Collection;
-
 import java.util.Set;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/author")
 public class AuthorController {
 
     @Autowired
@@ -53,7 +50,7 @@ public class AuthorController {
         return new ResponseEntity<>(iAuthorService.updateAuthor(firstname, lastname, id), HttpStatus.OK);
     }
     //Obtener todos los author
-    @GetMapping("/allauthors")
+    @GetMapping("/allauthor")
     public Collection<AuthorDTO> allauthor(){
         return iAuthorService.getAllAuthor();
     }

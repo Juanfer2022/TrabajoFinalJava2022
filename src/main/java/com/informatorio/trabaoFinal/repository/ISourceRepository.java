@@ -21,7 +21,13 @@ public interface ISourceRepository  extends JpaRepository<Source, Long> {
     @Modifying
     @Query(value = "UPDATE Source SET  related=0 WHERE ID=:ids")
     public void sourceNotRelatedArticle(@Param("ids") Long ids);
+
+    @Query("from Source s where s.name= :code ")
+    Set<Source> listCode(@Param("code") String code);
+
 }
+
+
    /* @Modifying
     @Query("update Source s set s.name:name, s.code:code where s.id:ids")
     Set<Source> updateSource(@Param("name")String name, @Param("code") String code, @Param("ids") Long ids);

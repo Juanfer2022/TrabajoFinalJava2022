@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/sources")
+@RequestMapping("/source")
 public class SourceController {
 
     @Autowired
@@ -49,14 +49,14 @@ public class SourceController {
     }
 
     //Mostrar todos sources
-    @GetMapping("/allsources")
+    @GetMapping("/allsource")
     public Collection<SourceDTO> allsources(){
         return iSourceService.getAllSource();
     }
 
     //Mostrar souces con paginacion
-    @GetMapping("/allsources/page")
-    public Page<SourceDTO> allsources(@RequestParam Integer page, @RequestParam Integer tam)
+    @GetMapping("/allsource/page")
+    public Page<SourceDTO> allsources(@RequestParam Integer page, Integer tam)
     {
         Pageable pageable = PageRequest.of(page, tam);
         return iSourceService.getAllSource(pageable);

@@ -35,6 +35,11 @@ public class SourceService implements ISourceService {
     public void createSource(SourceDTO sourceDTO) {
 
         String code = sourceDTO.getName();
+        Set<Source> sources = iSourceRepository.listCode(code);
+        if(sources.size()!=0){
+            throw new NewsAppException("Source", HttpStatus.NOT_FOUND,
+                    "El nombre de la source ya esta codificado.Ingrese un nombre valido");
+        }
         Source source = mapper.convertValue(sourceDTO, Source.class);
         source.setCreateAt(LocalDate.now());
         source.setCode(codigoSource.crearcodigo(code));

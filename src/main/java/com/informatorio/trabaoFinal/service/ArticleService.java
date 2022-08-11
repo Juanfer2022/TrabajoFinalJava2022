@@ -105,22 +105,29 @@ public class ArticleService implements IArticleService{
 
     // buscar article por un string mayor a 2 caracteres,
     // que haya sido publicado y por los campos title y description paginado
+    @Transactional
    public Page<ArticleDTO> getAllArticleLikePage(Pageable pageable, String wordToSearch){
 
         List<Article> articlePage = iArticleRepository.
-                getArticleByPublishedAndTitleOrDescriptionAndFullname( wordToSearch);
-
+                getArticleByPublishedAndTitleOrDescriptionAndFullname( wordToSearch, pageable);
+        if(articlePage.size()==0){
+            throw new NewsAppException("Source", HttpStatus.NOT_FOUND,
+                    "No hay articles publicados o no hay mas paginas a mostrar");
+        }
         List<ArticleDTO> articleDTOList= articlePage.stream().map(article -> mapper.convertValue(
                 article, ArticleDTO.class)).toList();
+
         return new PageImpl<>(articleDTOList);
    }
+
+
 
     // Traer todos los articles publicados
     public Set<ArticleDTO> showAllPublished(){
         Set<Article> articles = iArticleRepository.showArticlePublished();
         if(articles.size()==0){
             throw new NewsAppException("Error.  "
-                    ,HttpStatus.NOT_FOUND," No existen Author creados posterior a la fecha dada.");
+                    ,HttpStatus.NOT_FOUND," No hay articles publicados hasta el momento.");
         }
 
         Set<ArticleDTO> articleDTOS = new HashSet<>();

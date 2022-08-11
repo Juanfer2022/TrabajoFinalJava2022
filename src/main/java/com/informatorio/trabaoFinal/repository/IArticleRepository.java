@@ -28,7 +28,7 @@ public interface IArticleRepository extends JpaRepository<Article, Long> {
     @Query("from  Article ar inner join Author au on ar.author.id=au.id where ar.published=1 and " +
             "(ar.title like %:wordToSearch% or ar.description like %:wordToSearch% or " +
             "ar.content like %:wordToSearch% or au.fullname like %:wordToSearch%)")
-    List<Article> getArticleByPublishedAndTitleOrDescriptionAndFullname(@Param("wordToSearch") String wordToSearch);
+    List<Article> getArticleByPublishedAndTitleOrDescriptionAndFullname(@Param("wordToSearch") String wordToSearch, Pageable pageable);
 
     @Query("from  Article ar inner join Author au on ar.author.id=au.id where ar.published=1 and " +
             "(ar.title like %:wordToSearch% or ar.description like %:wordToSearch% or " +

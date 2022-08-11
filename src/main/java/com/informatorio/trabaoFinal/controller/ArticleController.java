@@ -81,11 +81,10 @@ public class ArticleController {
 
     // buscar article por un string mayor a 2 caracteres,
     // que haya sido publicado y por los campos title y description paginado
-   @GetMapping("/allarticle/page")
-    Page<ArticleDTO>  allArticlePage(@RequestParam Integer pages, String wordToSearch){
-        Pageable pageable = PageRequest.of(pages, 3);
+    @GetMapping("/allarticle/page")
+    Page<ArticleDTO>  allArticlePage(@RequestParam Integer pages,Integer tam, String wordToSearch) {
+        Pageable pageable = PageRequest.of(pages, tam);
         return iArticleService.getAllArticleLikePage(pageable, wordToSearch);
-   }
-
+    }
 
 }
