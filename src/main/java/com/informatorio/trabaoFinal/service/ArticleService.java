@@ -112,7 +112,7 @@ public class ArticleService implements IArticleService{
                 getArticleByPublishedAndTitleOrDescriptionAndFullname( wordToSearch, pageable);
         if(articlePage.size()==0){
             throw new NewsAppException("Source", HttpStatus.NOT_FOUND,
-                    "No hay articles publicados o no hay mas paginas a mostrar");
+                    "No hay articles publicados o no hay Coincidencia con la busqueda lanzada");
         }
         List<ArticleDTO> articleDTOList= articlePage.stream().map(article -> mapper.convertValue(
                 article, ArticleDTO.class)).toList();

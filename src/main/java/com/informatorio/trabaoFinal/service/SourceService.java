@@ -5,6 +5,7 @@ import com.informatorio.trabaoFinal.dto.SourceDTO;
 import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Source;
+import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import com.informatorio.trabaoFinal.repository.ISourceRepository;
 import com.informatorio.trabaoFinal.util.CodigoSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class SourceService implements ISourceService {
 
     @Autowired
     ISourceRepository iSourceRepository;
+    @Autowired
+    IArticleRepository iArticleRepository;
 
     @Autowired
     ObjectMapper mapper;
@@ -53,7 +56,12 @@ public class SourceService implements ISourceService {
     //Borrar Source
     public void deleteSource(Long id) {
 
-            Optional<Source> source = iSourceRepository.findById(id);
+        if(iArticleRepository.listSourcesInArticle(id).size() !=0){
+            throw new NewsAppException("Source", HttpStatus.BAD_REQUEST,
+                    "Accion INVALIDA. EL Source esta usada en un Article.");
+        }
+
+        Optional<Source> source = iSourceRepository.findById(id);
 
             if (source.isEmpty()) {
                 throw new ResourceNotFoundException("Source no encontrado. id inexistente", "id: ", id);

@@ -5,6 +5,7 @@ import com.informatorio.trabaoFinal.dto.AuthorDTO;
 import com.informatorio.trabaoFinal.exceptions.NewsAppException;
 import com.informatorio.trabaoFinal.exceptions.ResourceNotFoundException;
 import com.informatorio.trabaoFinal.model.Author;
+import com.informatorio.trabaoFinal.repository.IArticleRepository;
 import com.informatorio.trabaoFinal.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ public class AuthorService implements IAuthorService {
 
     @Autowired
     IAuthorRepository iAuthorRepository;
+    @Autowired
+    IArticleRepository iArticleRepository;
 
     @Autowired
     ObjectMapper mapper;
@@ -51,6 +54,11 @@ public class AuthorService implements IAuthorService {
 
     //B0rra un Author
     public void deleteAuthor(Long id) {
+
+        if(iArticleRepository.listAuthorsInArticle(id).size() !=0){
+            throw new NewsAppException("Source", HttpStatus.BAD_REQUEST,
+                    "Accion INVALIDA. EL Author esta usada en un Article.");
+        }
         Optional<Author> author = iAuthorRepository.findById(id);
 
         if (author.isEmpty()) {

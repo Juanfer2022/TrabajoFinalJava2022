@@ -45,5 +45,11 @@ public interface IArticleRepository extends JpaRepository<Article, Long> {
     @Query("from Article a where a.published = 1")
     Set<Article> showArticlePublished();
 
+    @Query("from Article a where a.source.id = :id")
+    Set<Article> listSourcesInArticle(@Param("id")Long id);
+
+    @Query("from Article a where a.author.id = :id")
+    Set<Article> listAuthorsInArticle(@Param("id")Long id);
+
 }
 
